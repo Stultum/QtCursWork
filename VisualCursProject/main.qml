@@ -11,7 +11,9 @@ ApplicationWindow {
 
     // Пересчёт независимых от плотности пикселей в физические пиксели устройства
     readonly property int dpi: Screen.pixelDensity * 25.4
-    function dp(x){ return (dpi < 120) ? x : x*(dpi/160); }
+    function dp(x) {
+        return (dpi < 120) ? x : x * (dpi / 160)
+    }
 
     // Application Bar
     Rectangle {
@@ -20,15 +22,15 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         width: 48
-        color: "#4cd964"
+        color: "#1760A6"
 
         // Иконка-Гамбургер
         Rectangle {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.left: parent.left
-            width: dp(48)
-            color: "#4cd964"
+            width: 48
+            color: "#578CBF"
 
             Rectangle {
                 anchors.top: parent.top
@@ -65,7 +67,6 @@ ApplicationWindow {
                 }
             }
         }
-
     }
 
     // Loader для смены Фрагментов
@@ -78,21 +79,21 @@ ApplicationWindow {
         source: "OnSaleFragment.qml"
 
         // Функция для смены содержимого Loader
-        function loadFragment(index){
+        function loadFragment(index) {
 
-            switch(index){
+            switch (index) {
             case 0:
                 loader.source = "OnSaleFragment.qml"
-                break;
+                break
             case 1:
                 loader.source = "SoldFragment.qml"
-                break;
+                break
             case 2:
                 loader.source = "ReturnedFragment.qml"
-                break;
+                break
             default:
                 loader.source = "OnSaleFragment.qml"
-                break;
+                break
             }
         }
     }
@@ -148,9 +149,14 @@ ApplicationWindow {
     ListModel {
         id: navModel
 
-        ListElement {fragment: "Fragment 1"}
-        ListElement {fragment: "Fragment 2"}
-        ListElement {fragment: "Fragment 3"}
+        ListElement {
+            fragment: "Одежда на продаже"
+        }
+        ListElement {
+            fragment: "Проданная одежда"
+        }
+        ListElement {
+            fragment: "Возвращенная одежда"
+        }
     }
 }
-
