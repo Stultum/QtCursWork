@@ -50,6 +50,7 @@ public slots:
     bool removeFromOnSaleTable(const int id);
     bool removeFromReturnedTable(const int id);
     bool removeFromSoldTable(const int id);
+    bool getByFilter(const QString& filter);
 };
 
 

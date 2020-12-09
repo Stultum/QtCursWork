@@ -227,3 +227,19 @@ bool ShopDataBase::removeFromSoldTable(const int id){
     return false;
 }
 
+bool ShopDataBase::getByFilter(const QString& filter){
+    QSqlQuery query;
+    query.prepare("SELECT *  FROM "
+                        ON_SALE_TABLE " WHERE Category = :catThis");
+    query.bindValue(":catThis", filter);
+    if(!query.exec()){
+        std::cout<< "error get from "<<SOLD_TABLE<<std::endl;
+        std::cout<< query.lastError().text().toStdString()<<std::endl;
+        return false;
+    } else {
+        qDebug()<<filter;
+        return true;
+    }
+    return false;
+}
+
