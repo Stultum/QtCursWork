@@ -9,6 +9,8 @@ Page {
 
     Label {
         text: qsTr("You are on the home page.")
+        anchors.verticalCenterOffset: -169
+        anchors.horizontalCenterOffset: -194
         anchors.centerIn: parent
     }
 }

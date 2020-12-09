@@ -1,9 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>HomeForm.ui.qml</file>
-        <file>Page1Form.ui.qml</file>
-        <file>Page2Form.ui.qml</file>
-        <file>qtquickcontrols2.conf</file>
+        <file>NavigationDrawer.qml</file>
+        <file>OnSaleFragment.qml</file>
+        <file>SoldFragment.qml</file>
+        <file>ReturnedFragment.qml</file>
+        <file>mock.jpg</file>
+        <file>splash.jfif</file>
     </qresource>
 </RCC>
