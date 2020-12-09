@@ -8,6 +8,7 @@ import QtGraphicalEffects 1.0
 // Application Bar
 Rectangle {
     id: menuRect
+
     anchors.fill: parent
 
     Rectangle {
@@ -30,7 +31,7 @@ Rectangle {
             model: navModel
 
             delegate: Item {
-                width: dp(300)
+                width: 250
                 height: 360
 
                 Rectangle {
@@ -137,96 +138,341 @@ Rectangle {
         anchors.left: gridRect.right
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-        color: "#578CBF"
+        color: "#9ACDFF"
 
         ComboBox {
-            id: equipmentList
+            id: controlCategory
+            anchors.margins: 10
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.margins: 10
-            width: 250
-            height: 44
-
-            model: [qsTr("Верхняя одежда"), qsTr("Обувь"), qsTr(
-                    "Свитеры/Джемперы"), qsTr("Брюки/Джинсы"), qsTr(
-                    "Футболки/Блузки/Рубашки"), qsTr("Юбки/Платья")]
-
-            //the background of the combobox
-            background: Rectangle {
-                color: "#95A4A8"
-                border.color: "white"
-                radius: height / 2
-            }
+            model: ["Верхняя одежда", "Обувь", "Свитеры/Джемперы", "Брюки/Джинсы", "Футболки/Блузки/Рубашки", "Юбки/Платья"]
 
             delegate: ItemDelegate {
-                id: itemDlgt
-                width: equipmentList.width
-                height: 40
-                padding: 0
-
+                width: controlCategory.width
                 contentItem: Text {
-                    id: textItem
                     text: modelData
-                    color: hovered ? "white" : "#507BF6"
-                    font: equipmentList.font
+                    color: hovered ? "#1760A6" : "#47A4FF"
+                    font: controlCategory.font
                     elide: Text.ElideRight
                     verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
                 }
-
-                background: Rectangle {
-                    radius: 20
-                    color: itemDlgt.hovered ? "#507BF6" : "white"
-                    anchors.left: itemDlgt.left
-                    anchors.leftMargin: 0
-                    width: itemDlgt.width - 2
-                }
-
-                onPressed: console.log(
-                               itemDlgt.height + " " + rectDlgt.height) //are not the same!
+                highlighted: controlCategory.highlightedIndex == index
             }
 
-            //the arrow on the right in the combobox
-            indicator: Image {
-                width: 50
-                height: width
-                horizontalAlignment: Image.AlignRight
-                source: comboPopup.visible ? "arrowOpen.png" : "arrowClose.png"
+            indicator: Canvas {
+                id: canvas
+                x: controlCategory.width - width - controlCategory.rightPadding
+                y: controlCategory.topPadding + (controlCategory.availableHeight - height) / 2
+                width: 12
+                height: 8
+                contextType: "2d"
+                rotation: listview.visible ? 180 : 0
+
+                Connections {
+                    target: controlCategory
+                    onPressedChanged: canvas.requestPaint()
+                }
+
+                onPaint: {
+                    context.reset()
+                    context.moveTo(0, 0)
+                    context.lineTo(width, 0)
+                    context.lineTo(width / 2, height)
+                    context.closePath()
+                    context.fillStyle = controlCategory.pressed ? "#1760A6" : "#47A4FF"
+                    context.fill()
+                }
             }
 
-            //the text in the combobox
             contentItem: Text {
-
-                text: equipmentList.displayText
-                font: equipmentList.font
-                color: "white"
-                verticalAlignment: Text.AlignVCenter
+                id: content
+                text: controlCategory.displayText
+                font: controlCategory.font
+                color: controlCategory.hovered ? "#1760A6" : "#47A4FF"
                 horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
             }
 
-            //the list of elements and their style when the combobox is open
+            background: Rectangle {
+                implicitWidth: 120
+                implicitHeight: 40
+                border.color: controlCategory.hovered ? "#1760A6" : "#47A4FF"
+                border.width: controlCategory.visualFocus ? 5 : 3
+                radius: 4
+            }
+
             popup: Popup {
-                id: comboPopup
-                y: equipmentList.height - 1
-                width: equipmentList.width
-                height: contentItem.implicitHeigh
+                y: controlCategory.height - 1
+                width: controlCategory.width
+                implicitHeight: listview.contentHeight
                 padding: 1
 
                 contentItem: ListView {
-                    id: listView
-                    implicitHeight: contentHeight
-                    model: equipmentList.popup.visible ? equipmentList.delegateModel : null
+                    id: listview
+                    clip: true
+                    model: controlCategory.popup.visible ? controlCategory.delegateModel : null
+                    currentIndex: controlCategory.highlightedIndex
 
                     ScrollIndicator.vertical: ScrollIndicator {
                     }
                 }
 
                 background: Rectangle {
-                    radius: 20
-                    border.width: 1
-                    border.color: "#95A4A8"
+                    border.color: controlCategory.hovered ? "#1760A6" : "#47A4FF"
+                    radius: 4
+                }
+            }
+        }
+
+        ComboBox {
+            id: controlSortBy
+            anchors.margins: 10
+            anchors.top: controlCategory.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            model: ["Цена по возрастанию", "Цена по убыванию", "Дата поступления по возрастнию ", "Дата поступления по убыванию"]
+
+            delegate: ItemDelegate {
+                width: controlSortBy.width
+                contentItem: Text {
+                    text: modelData
+                    color: hovered ? "#1760A6" : "#47A4FF"
+                    font: controlSortBy.font
+                    elide: Text.ElideRight
+                    verticalAlignment: Text.AlignVCenter
+                }
+                highlighted: controlSortBy.highlightedIndex == index
+            }
+
+            indicator: Canvas {
+                id: canvasSortBy
+                x: controlSortBy.width - width - controlSortBy.rightPadding
+                y: controlSortBy.topPadding + (controlSortBy.availableHeight - height) / 2
+                width: 12
+                height: 8
+                contextType: "2d"
+                rotation: listviewSortBy.visible ? 180 : 0
+
+                Connections {
+                    target: controlSortBy
+                    onPressedChanged: canvasSortBy.requestPaint()
+                }
+
+                onPaint: {
+                    context.reset()
+                    context.moveTo(0, 0)
+                    context.lineTo(width, 0)
+                    context.lineTo(width / 2, height)
+                    context.closePath()
+                    context.fillStyle = controlSortBy.pressed ? "#1760A6" : "#47A4FF"
+                    context.fill()
+                }
+            }
+
+            contentItem: Text {
+                id: contentSortBy
+                text: controlSortBy.displayText
+                font: controlSortBy.font
+                color: controlSortBy.hovered ? "#1760A6" : "#47A4FF"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+
+            background: Rectangle {
+                implicitWidth: 120
+                implicitHeight: 40
+                border.color: controlSortBy.hovered ? "#1760A6" : "#47A4FF"
+                border.width: controlSortBy.visualFocus ? 5 : 3
+                radius: 4
+            }
+
+            popup: Popup {
+                y: controlSortBy.height - 1
+                width: controlSortBy.width
+                implicitHeight: listviewSortBy.contentHeight
+                padding: 1
+
+                contentItem: ListView {
+                    id: listviewSortBy
+                    clip: true
+                    model: controlSortBy.popup.visible ? controlSortBy.delegateModel : null
+                    currentIndex: controlSortBy.highlightedIndex
+
+                    ScrollIndicator.vertical: ScrollIndicator {
+                    }
+                }
+
+                background: Rectangle {
+                    border.color: controlSortBy.hovered ? "#1760A6" : "#47A4FF"
+                    radius: 4
+                }
+            }
+        }
+
+        ComboBox {
+            id: controlSize
+            anchors.margins: 10
+            anchors.top: controlSortBy.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            model: ["S", "M", "L ", "XL", "XXL"]
+
+            delegate: ItemDelegate {
+                width: controlSize.width
+                contentItem: Text {
+                    text: modelData
+                    color: hovered ? "#1760A6" : "#47A4FF"
+                    font: controlSize.font
+                    elide: Text.ElideRight
+                    verticalAlignment: Text.AlignVCenter
+                }
+                highlighted: controlSize.highlightedIndex == index
+            }
+
+            indicator: Canvas {
+                id: canvasSize
+                x: controlSize.width - width - controlSize.rightPadding
+                y: controlSize.topPadding + (controlSize.availableHeight - height) / 2
+                width: 12
+                height: 8
+                contextType: "2d"
+                rotation: listviewSize.visible ? 180 : 0
+
+                Connections {
+                    target: controlSize
+                    onPressedChanged: canvasSize.requestPaint()
+                }
+
+                onPaint: {
+                    context.reset()
+                    context.moveTo(0, 0)
+                    context.lineTo(width, 0)
+                    context.lineTo(width / 2, height)
+                    context.closePath()
+                    context.fillStyle = controlSize.pressed ? "#1760A6" : "#47A4FF"
+                    context.fill()
+                }
+            }
+
+            contentItem: Text {
+                id: contentSize
+                text: controlSize.displayText
+                font: controlSize.font
+                color: controlSize.hovered ? "#1760A6" : "#47A4FF"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+
+            background: Rectangle {
+                implicitWidth: 120
+                implicitHeight: 40
+                border.color: controlSize.hovered ? "#1760A6" : "#47A4FF"
+                border.width: controlSize.visualFocus ? 5 : 3
+                radius: 4
+            }
+
+            popup: Popup {
+                y: controlSize.height - 1
+                width: controlSize.width
+                implicitHeight: listviewSize.contentHeight
+                padding: 1
+
+                contentItem: ListView {
+                    id: listviewSize
+                    clip: true
+                    model: controlSize.popup.visible ? controlSize.delegateModel : null
+                    currentIndex: controlSize.highlightedIndex
+
+                    ScrollIndicator.vertical: ScrollIndicator {
+                    }
+                }
+
+                background: Rectangle {
+                    border.color: controlSize.hovered ? "#1760A6" : "#47A4FF"
+                    radius: 4
+                }
+            }
+        }
+
+        Column {
+            anchors.leftMargin: 90
+            anchors.top: controlSize.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            RadioButton {
+                id: controlMaleRadio
+                text: qsTr("Мужская одежда")
+                checked: true
+
+                indicator: Rectangle {
+                    id: indicatorMale
+                    implicitWidth: 26
+                    implicitHeight: 26
+                    x: controRadiol.leftPadding
+                    y: parent.height / 2 - height / 2
+                    radius: 13
+                    border.color: controlMaleRadio.down ? "#47A4FF" : "#1760A6"
+
+                    Rectangle {
+                        width: 14
+                        height: 14
+                        x: 6
+                        y: 6
+                        radius: 7
+                        color: controlMaleRadio.down ? "#47A4FF" : "#1760A6"
+                        visible: controlMaleRadio.checked
+                    }
+                }
+
+                contentItem: Text {
+                    id: maleText
+                    anchors.left: indicatorMale.right
+                    anchors.leftMargin: 10
+                    text: controlMaleRadio.text
+                    font: controlMaleRadio.font
+                    opacity: enabled ? 1.0 : 0.3
+                    color: controlMaleRadio.down ? "#47A4FF" : "#1760A6"
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            RadioButton {
+                id: controlFemaleRadio
+                text: qsTr("Женская одежда")
+                checked: false
+
+                indicator: Rectangle {
+                    id: indicatorFemale
+                    implicitWidth: 26
+                    implicitHeight: 26
+                    x: controRadiol.leftPadding
+                    y: parent.height / 2 - height / 2
+                    radius: 13
+                    border.color: controlFemaleRadio.down ? "#47A4FF" : "#1760A6"
+
+                    Rectangle {
+                        width: 14
+                        height: 14
+                        x: 6
+                        y: 6
+                        radius: 7
+                        color: controlFemaleRadio.down ? "#47A4FF" : "#1760A6"
+                        visible: controlFemaleRadio.checked
+                    }
+                }
+
+                contentItem: Text {
+                    anchors.leftMargin: 10
+                    anchors.left: indicatorFemale.right
+                    text: controlFemaleRadio.text
+                    font: controlFemaleRadio.font
+                    opacity: enabled ? 1.0 : 0.3
+                    color: controlFemaleRadio.down ? "#47A4FF" : "#1760A6"
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
         }

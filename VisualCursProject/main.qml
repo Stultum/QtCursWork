@@ -7,6 +7,11 @@ ApplicationWindow {
     visible: true
     width: 1280
     height: 720
+    maximumHeight: height
+    maximumWidth: width
+
+    minimumHeight: height
+    minimumWidth: width
     title: qsTr("Hello World")
 
     // Пересчёт независимых от плотности пикселей в физические пиксели устройства
