@@ -13,7 +13,7 @@ ShopDataBase::~ShopDataBase()
 
 void ShopDataBase::connectToDataBase()
 {
-    if(!QFile(DATABASE_NAME).exists()){
+    if(!QFile("C:/" DATABASE_NAME).exists()){
             std::cout<<"DataBase connection error!"<<std::endl;
         } else {
             this->openDataBase();
@@ -25,7 +25,7 @@ bool ShopDataBase::openDataBase()
 {
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setHostName("ShopDataBase");
-    db.setDatabaseName(DATABASE_NAME);
+    db.setDatabaseName("C:/"DATABASE_NAME);
     if(db.open()){
         std::cout<<"DataBase succesfully connected!"<<std::endl;
         return true;
@@ -41,15 +41,7 @@ void ShopDataBase::closeDataBase(){
 
 bool ShopDataBase::insertIntoOnSaleTable(const QVariantList &data){
     QSqlQuery query;
-    query.prepare("INSERT INTO" ON_SALE_TABLE " ( "
-                  TABLE_NAME ", "
-                  TABLE_PRICE ", "
-                  TABLE_CATEGORY ", "
-                  TABLE_SIZE ", "
-                  TABLE_MADEBY ", "
-                  TABLE_IMAGE ", "
-                  TABLE_RECIEVE_DATE ", "
-                  TABLE_MALE_FEMALE " ) "
+    query.prepare("INSERT INTO ClothesOnSale ( Name, Price, Category, Size, MadeBy, Image, RecieveDate, MaleOrFemale ) "
             "VALUES (:Name, :Price, :Category, :Size, :MadeBy, :Image, :RecieveDate, :MaleFemale)");
     query.bindValue(":Name", data[0].toString());
     query.bindValue(":Price", data[1].toString());
@@ -62,12 +54,12 @@ bool ShopDataBase::insertIntoOnSaleTable(const QVariantList &data){
 
     if(!query.exec()){
         std::cout<< "error insert into "<<ON_SALE_TABLE<<std::endl;
-        std::cout<< query.lastError().text().toStdString()<<std::endl;
+        qDebug() << query.lastError().text();
         return false;
     } else {
         return true;
     }
-    return false;
+    return true;
 }
 
 bool ShopDataBase::insertIntoOnSaleTable(const QString &name, const QString &price, const QString &category, const QString &size, const QString &madeby, const QString &image, const QString &recievedate, const QString &maleorfemale){
@@ -80,6 +72,7 @@ bool ShopDataBase::insertIntoOnSaleTable(const QString &name, const QString &pri
     data.append(image);
     data.append(recievedate);
     data.append(maleorfemale);
+    qDebug() <<data[1];
 
     if(insertIntoOnSaleTable(data))
         return true;
@@ -112,7 +105,7 @@ bool ShopDataBase::insertIntoReturnedTable(const QVariantList &data){
 
     if(!query.exec()){
         std::cout<< "error insert into "<<RETURNED_TABLE<<std::endl;
-        std::cout<< query.lastError().text().toStdString()<<std::endl;
+        qDebug() << query.lastError().text();
         return false;
     } else {
         return true;

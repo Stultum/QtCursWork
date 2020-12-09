@@ -27,7 +27,7 @@ Rectangle {
             cellWidth: 300
             cellHeight: 420
             focus: true
-            model: navModel
+            model: onSaleModel
 
             delegate: Item {
                 width: 250
@@ -71,7 +71,7 @@ Rectangle {
                         anchors.right: parent.right
                         anchors.margins: 10
                         id: clothesImage
-                        source: imageFile
+                        source: image
                         height: 250
                     }
 
@@ -91,8 +91,8 @@ Rectangle {
 
                     Text {
                         anchors.margins: 5
-                        id: clothesPrice
-                        text: price
+                        id: price
+                        text: priceThis
                         anchors.top: clothesName.bottom
                         anchors.left: parent.left
                         anchors.right: parent.right
@@ -106,7 +106,7 @@ Rectangle {
                     Text {
                         anchors.margins: 5
                         id: clothesAvailable
-                        text: available
+                        text: "available"
                         anchors.top: clothesPrice.bottom
                         anchors.left: parent.left
                         anchors.right: parent.right
@@ -604,6 +604,11 @@ Rectangle {
                 border.color: controlAddNew.down ? "#47A4FF" : "#1760A6"
                 border.width: 1
                 radius: 2
+            }
+            onClicked: {
+                database.insertIntoOnSaleTable("al", "al", "al", "al", "al",
+                                               "al", "al", "al")
+                onSaleModel.updateModel()
             }
         }
     }
