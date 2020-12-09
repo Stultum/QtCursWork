@@ -27,7 +27,7 @@ Rectangle {
             cellWidth: 300
             cellHeight: 420
             focus: true
-            model: navModel
+            model: onSaleModel
 
             delegate: Item {
                 width: 250
@@ -71,7 +71,7 @@ Rectangle {
                         anchors.right: parent.right
                         anchors.margins: 10
                         id: clothesImage
-                        source: imageFile
+                        source: image
                         height: 250
                     }
 
@@ -92,7 +92,7 @@ Rectangle {
                     Text {
                         anchors.margins: 5
                         id: clothesPrice
-                        text: price
+                        text: priceThis
                         anchors.top: clothesName.bottom
                         anchors.left: parent.left
                         anchors.right: parent.right
@@ -106,7 +106,7 @@ Rectangle {
                     Text {
                         anchors.margins: 5
                         id: clothesAvailable
-                        text: available
+                        text: "available"
                         anchors.top: clothesPrice.bottom
                         anchors.left: parent.left
                         anchors.right: parent.right
@@ -143,7 +143,7 @@ Rectangle {
         color: "#9ACDFF"
 
         Label {
-            anchors.leftMargin: 75
+            anchors.leftMargin: 15
             anchors.topMargin: 40
             anchors.top: parent.top
             anchors.left: parent.left
@@ -162,6 +162,7 @@ Rectangle {
             anchors.top: categoryComboBoxLabel.bottom
             anchors.left: parent.left
             anchors.right: parent.right
+
             model: ["Верхняя одежда", "Обувь", "Свитеры/Джемперы", "Брюки/Джинсы", "Футболки/Блузки/Рубашки", "Юбки/Платья"]
 
             delegate: ItemDelegate {
@@ -222,6 +223,9 @@ Rectangle {
             popup: Popup {
                 y: controlCategory.height - 1
                 width: controlCategory.width
+                onAboutToHide: {
+                    onSaleModel.updateModelFilter(content.text)
+                }
                 implicitHeight: listview.contentHeight
                 padding: 1
 
@@ -243,7 +247,7 @@ Rectangle {
         }
 
         Label {
-            anchors.leftMargin: 95
+            anchors.leftMargin: 15
             anchors.topMargin: 40
             anchors.top: controlCategory.bottom
             anchors.left: parent.left
@@ -324,6 +328,9 @@ Rectangle {
                 width: controlSortBy.width
                 implicitHeight: listviewSortBy.contentHeight
                 padding: 1
+                onAboutToHide: {
+                    onSaleModel.updateModelSort(contentSortBy.text)
+                }
 
                 contentItem: ListView {
                     id: listviewSortBy
@@ -343,7 +350,7 @@ Rectangle {
         }
 
         Label {
-            anchors.leftMargin: 120
+            anchors.leftMargin: 15
             anchors.topMargin: 40
             anchors.top: controlSortBy.bottom
             anchors.left: parent.left
@@ -424,6 +431,9 @@ Rectangle {
                 width: controlSize.width
                 implicitHeight: listviewSize.contentHeight
                 padding: 1
+                onAboutToHide: {
+                    onSaleModel.updateModelSize(contentSize.text)
+                }
 
                 contentItem: ListView {
                     id: listviewSize
@@ -443,7 +453,7 @@ Rectangle {
         }
 
         Label {
-            anchors.leftMargin: 55
+            anchors.leftMargin: 15
             anchors.topMargin: 40
             anchors.top: controlSize.bottom
             anchors.left: parent.left
@@ -459,14 +469,17 @@ Rectangle {
         Column {
             id: radioColumn
             anchors.topMargin: 20
-            anchors.leftMargin: 90
+            anchors.leftMargin: 15
             anchors.top: femaleMaleLabel.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             RadioButton {
                 id: controlMaleRadio
                 text: qsTr("Мужская одежда")
-                checked: true
+                checked: false
+                onClicked: {
+                    onSaleModel.updateModelSex(qsTr("Мужская"))
+                }
 
                 indicator: Rectangle {
                     id: indicatorMale
@@ -502,8 +515,12 @@ Rectangle {
 
             RadioButton {
                 id: controlFemaleRadio
-                text: qsTr("Женская одежда")
+                text: qsTr("Женская")
                 checked: false
+
+                onClicked: {
+                    onSaleModel.updateModelSex(qsTr("Женская"))
+                }
 
                 indicator: Rectangle {
                     id: indicatorFemale
@@ -539,7 +556,7 @@ Rectangle {
 
         CheckBox {
             anchors.topMargin: 30
-            anchors.leftMargin: 90
+            anchors.leftMargin: 15
             anchors.top: radioColumn.bottom
             anchors.right: parent.right
             anchors.left: parent.left
@@ -580,7 +597,6 @@ Rectangle {
 
         Button {
             anchors.margins: 10
-            //anchors.top: controlInShop.bottom
             anchors.right: parent.right
             anchors.left: parent.left
             anchors.bottom: parent.bottom
@@ -603,7 +619,12 @@ Rectangle {
                 opacity: enabled ? 1 : 0.3
                 border.color: controlAddNew.down ? "#47A4FF" : "#1760A6"
                 border.width: 1
-                radius: 2
+                radius: 4
+            }
+            onClicked: {
+                //                database.insertIntoOnSaleTable("al", "al", "al", "al", "al",
+                //                                               "al", "al", "al")
+                onSaleModel.updateModel()
             }
         }
     }
