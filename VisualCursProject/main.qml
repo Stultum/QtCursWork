@@ -39,7 +39,7 @@ Loader {
                 repeat: true
                 onTriggered: {
                     progress.value++
-                    if (progress.value >= 100) {
+                    if (progress.value >= 1) {
                         timer.stop()
                         splashWindow.timeout()
                     }
