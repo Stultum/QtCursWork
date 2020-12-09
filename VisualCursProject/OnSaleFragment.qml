@@ -17,7 +17,6 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.bottom: parent.bottom
-        anchors.right: controlPanel
         anchors.leftMargin: 30
         anchors.topMargin: 50
         GridView {
@@ -85,8 +84,9 @@ Rectangle {
                         anchors.right: parent.right
                         font.pixelSize: dp(20)
                         renderType: Text.NativeRendering
-                        horizontalAlignment: Text.AlignLeft
+                        horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
+                        color: "#1760A6"
                     }
 
                     Text {
@@ -98,8 +98,9 @@ Rectangle {
                         anchors.right: parent.right
                         font.pixelSize: dp(20)
                         renderType: Text.NativeRendering
-                        horizontalAlignment: Text.AlignLeft
+                        horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
+                        color: "#1760A6"
                     }
 
                     Text {
@@ -112,8 +113,9 @@ Rectangle {
                         anchors.bottom: parent.bottom
                         font.pixelSize: dp(20)
                         renderType: Text.NativeRendering
-                        horizontalAlignment: Text.AlignLeft
+                        horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
+                        color: "#1760A6"
                     }
 
                     MouseArea {
@@ -140,10 +142,24 @@ Rectangle {
         anchors.right: parent.right
         color: "#9ACDFF"
 
+        Label {
+            anchors.leftMargin: 75
+            anchors.topMargin: 40
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            id: categoryComboBoxLabel
+            font.family: "Times"
+            font.pointSize: 13
+            font.bold: true
+            text: "Категория товара"
+            color: "#1760A6"
+        }
+
         ComboBox {
             id: controlCategory
             anchors.margins: 10
-            anchors.top: parent.top
+            anchors.top: categoryComboBoxLabel.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             model: ["Верхняя одежда", "Обувь", "Свитеры/Джемперы", "Брюки/Джинсы", "Футболки/Блузки/Рубашки", "Юбки/Платья"]
@@ -226,10 +242,24 @@ Rectangle {
             }
         }
 
+        Label {
+            anchors.leftMargin: 95
+            anchors.topMargin: 40
+            anchors.top: controlCategory.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            id: sortByComboBoxLabel
+            font.family: "Times"
+            font.pointSize: 13
+            font.bold: true
+            text: "Сортировать"
+            color: "#1760A6"
+        }
+
         ComboBox {
             id: controlSortBy
             anchors.margins: 10
-            anchors.top: controlCategory.bottom
+            anchors.top: sortByComboBoxLabel.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             model: ["Цена по возрастанию", "Цена по убыванию", "Дата поступления по возрастнию ", "Дата поступления по убыванию"]
@@ -312,10 +342,24 @@ Rectangle {
             }
         }
 
+        Label {
+            anchors.leftMargin: 120
+            anchors.topMargin: 40
+            anchors.top: controlSortBy.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            id: sizeComboBoxLabel
+            font.family: "Times"
+            font.pointSize: 13
+            font.bold: true
+            text: "Размер"
+            color: "#1760A6"
+        }
+
         ComboBox {
             id: controlSize
             anchors.margins: 10
-            anchors.top: controlSortBy.bottom
+            anchors.top: sizeComboBoxLabel.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             model: ["S", "M", "L ", "XL", "XXL"]
@@ -398,9 +442,25 @@ Rectangle {
             }
         }
 
-        Column {
-            anchors.leftMargin: 90
+        Label {
+            anchors.leftMargin: 55
+            anchors.topMargin: 40
             anchors.top: controlSize.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            id: femaleMaleLabel
+            font.family: "Times"
+            font.pointSize: 13
+            font.bold: true
+            text: "Мужская или женская"
+            color: "#1760A6"
+        }
+
+        Column {
+            id: radioColumn
+            anchors.topMargin: 20
+            anchors.leftMargin: 90
+            anchors.top: femaleMaleLabel.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             RadioButton {
@@ -412,7 +472,7 @@ Rectangle {
                     id: indicatorMale
                     implicitWidth: 26
                     implicitHeight: 26
-                    x: controRadiol.leftPadding
+                    x: controlMaleRadio.leftPadding
                     y: parent.height / 2 - height / 2
                     radius: 13
                     border.color: controlMaleRadio.down ? "#47A4FF" : "#1760A6"
@@ -449,7 +509,7 @@ Rectangle {
                     id: indicatorFemale
                     implicitWidth: 26
                     implicitHeight: 26
-                    x: controRadiol.leftPadding
+                    x: controlMaleRadio.leftPadding
                     y: parent.height / 2 - height / 2
                     radius: 13
                     border.color: controlFemaleRadio.down ? "#47A4FF" : "#1760A6"
@@ -474,6 +534,76 @@ Rectangle {
                     color: controlFemaleRadio.down ? "#47A4FF" : "#1760A6"
                     verticalAlignment: Text.AlignVCenter
                 }
+            }
+        }
+
+        CheckBox {
+            anchors.topMargin: 30
+            anchors.leftMargin: 90
+            anchors.top: radioColumn.bottom
+            anchors.right: parent.right
+            anchors.left: parent.left
+            id: controlInShop
+            text: qsTr("Есть в наличии")
+            checked: false
+
+            indicator: Rectangle {
+                id: ind
+                implicitWidth: 26
+                implicitHeight: 26
+                x: controlInShop.leftPadding
+                y: parent.height / 2 - height / 2
+                radius: 3
+                border.color: controlInShop.down ? "#47A4FF" : "#1760A6"
+
+                Rectangle {
+                    width: 14
+                    height: 14
+                    x: 6
+                    y: 6
+                    radius: 2
+                    color: controlInShop.down ? "#47A4FF" : "#1760A6"
+                    visible: controlInShop.checked
+                }
+            }
+
+            contentItem: Text {
+                anchors.left: ind.right
+                anchors.leftMargin: 10
+                text: controlInShop.text
+                font: controlInShop.font
+                opacity: enabled ? 1.0 : 0.3
+                color: controlInShop.down ? "#47A4FF" : "#1760A6"
+                verticalAlignment: Text.AlignVCenter
+            }
+        }
+
+        Button {
+            anchors.margins: 10
+            //anchors.top: controlInShop.bottom
+            anchors.right: parent.right
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            id: controlAddNew
+            text: qsTr("Добавить новый товар")
+
+            contentItem: Text {
+                text: controlAddNew.text
+                font: controlAddNew.font
+                opacity: enabled ? 1.0 : 0.3
+                color: controlAddNew.down ? "#47A4FF" : "#1760A6"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 40
+                opacity: enabled ? 1 : 0.3
+                border.color: controlAddNew.down ? "#47A4FF" : "#1760A6"
+                border.width: 1
+                radius: 2
             }
         }
     }

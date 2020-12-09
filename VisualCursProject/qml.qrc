@@ -6,5 +6,6 @@
         <file>SoldFragment.qml</file>
         <file>ReturnedFragment.qml</file>
         <file>mock.jpg</file>
+        <file>splash.jfif</file>
     </qresource>
 </RCC>
