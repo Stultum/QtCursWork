@@ -20,14 +20,14 @@ QVariant OnSaleModel::data(const QModelIndex & index, int role) const
 QHash<int, QByteArray> OnSaleModel::roleNames() const{
     QHash<int, QByteArray> roles;
     roles[IdRole] = "id";
-    roles[NameRole] = "name";
-    roles[PriceRole] = "priceThis";
-    roles[CategoryRole] = "category";
-    roles[SizeRole] = "size";
-    roles[MadeByRole] = "madeby";
-    roles[ImageRole] = "image";
-    roles[RecieveDateRole] = "recievedate";
-    roles[MaleFemaleRole] = "maleorfemale";
+    roles[NameRole] = "nameModel";
+    roles[PriceRole] = "priceModel";
+    roles[CategoryRole] = "categoryModel";
+    roles[SizeRole] = "sizeModel";
+    roles[MadeByRole] = "madebyModel";
+    roles[ImageRole] = "imageModel";
+    roles[RecieveDateRole] = "recievedateModel";
+    roles[MaleFemaleRole] = "maleorfemaleModel";
 
     return roles;
 }

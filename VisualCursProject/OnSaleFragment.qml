@@ -7,6 +7,7 @@ import QtGraphicalEffects 1.0
 
 // Application Bar
 Rectangle {
+
     id: menuRect
 
     anchors.fill: parent
@@ -19,6 +20,19 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.leftMargin: 30
         anchors.topMargin: 50
+
+        Item {
+            id: dialogVars
+            property string thisName: ""
+            property string thisPrice: ""
+            property string thisCategory: ""
+            property string thisSize: ""
+            property string thisMadeBy: ""
+            property string thisImage: ""
+            property string thisRecieveDate: ""
+            property string thisMaleFemale: ""
+        }
+
         GridView {
             anchors.fill: parent
             id: clothesGrid
@@ -71,14 +85,14 @@ Rectangle {
                         anchors.right: parent.right
                         anchors.margins: 10
                         id: clothesImage
-                        source: image
+                        source: imageModel
                         height: 250
                     }
 
                     Text {
                         anchors.margins: 5
                         id: clothesName
-                        text: name
+                        text: nameModel
                         anchors.top: clothesImage.bottom
                         anchors.left: parent.left
                         anchors.right: parent.right
@@ -92,7 +106,7 @@ Rectangle {
                     Text {
                         anchors.margins: 5
                         id: clothesPrice
-                        text: priceThis
+                        text: priceModel
                         anchors.top: clothesName.bottom
                         anchors.left: parent.left
                         anchors.right: parent.right
@@ -125,6 +139,18 @@ Rectangle {
                         onEntered: {
                             itemAnimOnHover.running = true
                         }
+                        onClicked: {
+                            dialogVars.thisName = nameModel
+                            dialogVars.thisPrice = priceModel
+                            dialogVars.thisCategory = categoryModel
+                            dialogVars.thisSize = sizeModel
+                            dialogVars.thisMadeBy = madebyModel
+                            dialogVars.thisImage = imageModel
+                            dialogVars.thisRecieveDate = recievedateModel
+                            dialogVars.thisMaleFemale = maleorfemaleModel
+                            moreDialog.open()
+                        }
+
                         onExited: {
                             itemAnimOutHover.running = true
                         }
@@ -625,6 +651,73 @@ Rectangle {
                 //                database.insertIntoOnSaleTable("al", "al", "al", "al", "al",
                 //                                               "al", "al", "al")
                 onSaleModel.updateModel()
+            }
+        }
+    }
+
+    Dialog {
+        id: moreDialog
+        width: 400
+        height: 600
+        leftMargin: 300
+        topMargin: 50
+        Rectangle {
+            id: itemListDialog
+            anchors.fill: parent
+            radius: 10
+            color: "#9ACDFF"
+
+            Image {
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.margins: 10
+                id: clothesImageDialog
+                source: dialogVars.thisImage
+                height: 250
+            }
+
+            Text {
+                anchors.margins: 5
+                id: clothesNameDialog
+                text: dialogVars.thisName
+                anchors.top: clothesImageDialog.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                font.pixelSize: dp(20)
+                renderType: Text.NativeRendering
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                color: "#1760A6"
+            }
+
+            Text {
+                anchors.margins: 5
+                id: clothesPriceDialog
+                text: dialogVars.thisPrice
+                anchors.top: clothesNameDialog.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                font.pixelSize: dp(20)
+                renderType: Text.NativeRendering
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                color: "#1760A6"
+            }
+
+            Text {
+                anchors.margins: 5
+                id: clothesAvailableDialog
+                text: "available"
+                anchors.top: clothesPriceDialog.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                font.pixelSize: dp(20)
+                renderType: Text.NativeRendering
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                color: "#1760A6"
             }
         }
     }
