@@ -23,6 +23,7 @@ Rectangle {
 
         Item {
             id: dialogVars
+            property int thisId: 0
             property string thisName: ""
             property string thisPrice: ""
             property string thisCategory: ""
@@ -140,6 +141,7 @@ Rectangle {
                             itemAnimOnHover.running = true
                         }
                         onClicked: {
+                            dialogVars.thisId = idModel
                             dialogVars.thisName = nameModel
                             dialogVars.thisPrice = priceModel
                             dialogVars.thisCategory = categoryModel
@@ -659,8 +661,36 @@ Rectangle {
         id: moreDialog
         width: 400
         height: 600
-        leftMargin: 300
-        topMargin: 50
+        enter: Transition {
+            NumberAnimation {
+                property: "x"
+                from: -700
+                to: 300
+                duration: 400
+            }
+            NumberAnimation {
+                property: "y"
+                from: 50
+                to: 50
+                duration: 400
+            }
+        }
+
+        exit: Transition {
+            NumberAnimation {
+                property: "x"
+                from: 300
+                to: 1500
+                duration: 100
+            }
+            NumberAnimation {
+                property: "y"
+                from: 50
+                to: 50
+                duration: 100
+            }
+        }
+
         Rectangle {
             id: itemListDialog
             anchors.fill: parent
@@ -674,7 +704,7 @@ Rectangle {
                 anchors.margins: 10
                 id: clothesImageDialog
                 source: dialogVars.thisImage
-                height: 250
+                height: 350
             }
 
             Text {
@@ -718,6 +748,20 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 color: "#1760A6"
+            }
+
+            Button {
+                id: deleteButton
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                text: "Delete"
+
+                onClicked: {
+                    database.removeFromOnSaleTable(dialogVars.thisId)
+                    moreDialog.close()
+                    onSaleModel.updateModel()
+                }
             }
         }
     }
