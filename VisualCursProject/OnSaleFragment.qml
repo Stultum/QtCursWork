@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import QtQuick.Controls 2.1
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.0
 import QtQuick.Layouts 1.1
 import QtGraphicalEffects 1.0
@@ -97,8 +97,9 @@ Rectangle {
                         anchors.top: clothesImage.bottom
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        font.pixelSize: dp(20)
+                        font.pixelSize: dp(18)
                         renderType: Text.NativeRendering
+                        font.bold: true
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                         color: "#1760A6"
@@ -111,7 +112,8 @@ Rectangle {
                         anchors.top: clothesName.bottom
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        font.pixelSize: dp(20)
+                        font.pixelSize: dp(18)
+                        font.bold: true
                         renderType: Text.NativeRendering
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -125,8 +127,9 @@ Rectangle {
                         anchors.top: clothesPrice.bottom
                         anchors.left: parent.left
                         anchors.right: parent.right
+                        font.bold: true
                         anchors.bottom: parent.bottom
-                        font.pixelSize: dp(20)
+                        font.pixelSize: dp(18)
                         renderType: Text.NativeRendering
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -543,7 +546,7 @@ Rectangle {
 
             RadioButton {
                 id: controlFemaleRadio
-                text: qsTr("Женская")
+                text: qsTr("Женская одежда")
                 checked: false
 
                 onClicked: {
@@ -660,7 +663,7 @@ Rectangle {
     Dialog {
         id: moreDialog
         width: 400
-        height: 600
+        height: 640
         enter: Transition {
             NumberAnimation {
                 property: "x"
@@ -692,6 +695,7 @@ Rectangle {
         }
 
         Rectangle {
+            anchors.margins: -15
             id: itemListDialog
             anchors.fill: parent
             radius: 10
@@ -701,49 +705,216 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.margins: 10
+                anchors.margins: 20
                 id: clothesImageDialog
                 source: dialogVars.thisImage
                 height: 350
             }
 
+            Label {
+                anchors.topMargin: 15
+                anchors.leftMargin: 15
+                anchors.top: clothesImageDialog.bottom
+                anchors.left: parent.left
+                anchors.right: clothesNameDialog.left
+                id: moreNameLabel
+                font.family: "Times"
+                font.pointSize: 13
+                font.bold: true
+                text: "Название"
+                color: "#1760A6"
+            }
+
             Text {
-                anchors.margins: 5
+                anchors.topMargin: 15
+                anchors.rightMargin: 15
                 id: clothesNameDialog
                 text: dialogVars.thisName
                 anchors.top: clothesImageDialog.bottom
-                anchors.left: parent.left
                 anchors.right: parent.right
-                font.pixelSize: dp(20)
+                font.pointSize: 13
+                font.bold: true
+                font.italic: true
                 renderType: Text.NativeRendering
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 color: "#1760A6"
             }
 
+            Label {
+                anchors.topMargin: 5
+                anchors.leftMargin: 15
+                anchors.top: moreNameLabel.bottom
+                anchors.left: parent.left
+                anchors.right: clothesPriceDialog.left
+                id: morePriceLabel
+                font.family: "Times"
+                font.pointSize: 13
+                font.bold: true
+                text: "Цена"
+                color: "#1760A6"
+            }
+
             Text {
-                anchors.margins: 5
+                anchors.topMargin: 5
+                anchors.rightMargin: 15
                 id: clothesPriceDialog
                 text: dialogVars.thisPrice
                 anchors.top: clothesNameDialog.bottom
-                anchors.left: parent.left
                 anchors.right: parent.right
-                font.pixelSize: dp(20)
+                font.pointSize: 13
+                font.bold: true
+                font.italic: true
                 renderType: Text.NativeRendering
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 color: "#1760A6"
             }
 
-            Text {
-                anchors.margins: 5
-                id: clothesAvailableDialog
-                text: "available"
-                anchors.top: clothesPriceDialog.bottom
+            Label {
+                anchors.topMargin: 5
+                anchors.leftMargin: 15
+                anchors.top: morePriceLabel.bottom
                 anchors.left: parent.left
+                anchors.right: clothesCategoryDialog.left
+                id: moreCategoryLabel
+                font.family: "Times"
+                font.pointSize: 13
+                font.bold: true
+                text: "Категория"
+                color: "#1760A6"
+            }
+
+            Text {
+                anchors.topMargin: 5
+                anchors.rightMargin: 15
+                id: clothesCategoryDialog
+                text: dialogVars.thisCategory
+                anchors.top: clothesPriceDialog.bottom
                 anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                font.pixelSize: dp(20)
+                font.pointSize: 13
+                font.bold: true
+                font.italic: true
+                renderType: Text.NativeRendering
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                color: "#1760A6"
+            }
+
+            Label {
+                anchors.topMargin: 5
+                anchors.leftMargin: 15
+                anchors.top: moreCategoryLabel.bottom
+                anchors.left: parent.left
+                anchors.right: clothesSizeDialog.left
+                id: moreSizeLabel
+                font.family: "Times"
+                font.pointSize: 13
+                font.bold: true
+                text: "Размер"
+                color: "#1760A6"
+            }
+
+            Text {
+                anchors.topMargin: 5
+                anchors.rightMargin: 15
+                id: clothesSizeDialog
+                text: dialogVars.thisSize
+                anchors.top: clothesCategoryDialog.bottom
+                anchors.right: parent.right
+                font.pointSize: 13
+                font.bold: true
+                font.italic: true
+                renderType: Text.NativeRendering
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                color: "#1760A6"
+            }
+
+            Label {
+                anchors.topMargin: 5
+                anchors.leftMargin: 15
+                anchors.top: moreSizeLabel.bottom
+                anchors.left: parent.left
+                anchors.right: clothesMadeByDialog.left
+                id: moreMadeByLabel
+                font.family: "Times"
+                font.pointSize: 13
+                font.bold: true
+                text: "Изготовитель"
+                color: "#1760A6"
+            }
+
+            Text {
+                anchors.topMargin: 5
+                anchors.rightMargin: 15
+                id: clothesMadeByDialog
+                text: dialogVars.thisMadeBy
+                anchors.top: clothesSizeDialog.bottom
+                anchors.right: parent.right
+                font.pointSize: 13
+                font.bold: true
+                font.italic: true
+                renderType: Text.NativeRendering
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                color: "#1760A6"
+            }
+
+            Label {
+                anchors.topMargin: 5
+                anchors.leftMargin: 15
+                anchors.top: moreMadeByLabel.bottom
+                anchors.left: parent.left
+                anchors.right: clothesRecDateDialog.left
+                id: moreRecDateLabel
+                font.family: "Times"
+                font.pointSize: 13
+                font.bold: true
+                text: "Дата приема"
+                color: "#1760A6"
+            }
+
+            Text {
+                anchors.topMargin: 5
+                anchors.rightMargin: 15
+                id: clothesRecDateDialog
+                text: dialogVars.thisRecieveDate
+                anchors.top: clothesMadeByDialog.bottom
+                anchors.right: parent.right
+                font.pointSize: 13
+                font.bold: true
+                font.italic: true
+                renderType: Text.NativeRendering
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                color: "#1760A6"
+            }
+
+            Label {
+                anchors.topMargin: 5
+                anchors.leftMargin: 15
+                anchors.top: moreRecDateLabel.bottom
+                anchors.left: parent.left
+                anchors.right: clothesMaleFemaleDialog.left
+                id: moreMaleFemaleLabel
+                font.family: "Times"
+                font.pointSize: 13
+                font.bold: true
+                text: "Пол"
+                color: "#1760A6"
+            }
+
+            Text {
+                anchors.topMargin: 5
+                anchors.rightMargin: 15
+                id: clothesMaleFemaleDialog
+                text: dialogVars.thisMaleFemale
+                anchors.top: clothesRecDateDialog.bottom
+                anchors.right: parent.right
+                font.pointSize: 13
+                font.bold: true
+                font.italic: true
                 renderType: Text.NativeRendering
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -751,16 +922,65 @@ Rectangle {
             }
 
             Button {
-                id: deleteButton
-                anchors.bottom: parent.bottom
+                anchors.margins: 20
+                width: 170
+                anchors.right: buttonChange.left
                 anchors.left: parent.left
-                anchors.right: parent.right
-                text: "Delete"
+                anchors.bottom: parent.bottom
+                id: buttonDelete
 
+                contentItem: Text {
+                    text: "Удалить товар"
+                    font: controlAddNew.font
+                    opacity: enabled ? 1.0 : 0.3
+                    color: controlAddNew.down ? "#47A4FF" : "#1760A6"
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                }
+
+                background: Rectangle {
+                    implicitWidth: 100
+                    implicitHeight: 40
+                    opacity: enabled ? 1 : 0.3
+                    border.color: controlAddNew.down ? "#47A4FF" : "#1760A6"
+                    border.width: 1
+                    radius: 4
+                }
                 onClicked: {
                     database.removeFromOnSaleTable(dialogVars.thisId)
                     moreDialog.close()
                     onSaleModel.updateModel()
+                }
+            }
+
+            Button {
+                anchors.margins: 20
+                width: 170
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                id: buttonChange
+
+                contentItem: Text {
+                    text: "Редактировать товар"
+                    font: controlAddNew.font
+                    opacity: enabled ? 1.0 : 0.3
+                    color: controlAddNew.down ? "#47A4FF" : "#1760A6"
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                }
+
+                background: Rectangle {
+                    implicitWidth: 100
+                    implicitHeight: 40
+                    opacity: enabled ? 1 : 0.3
+                    border.color: controlAddNew.down ? "#47A4FF" : "#1760A6"
+                    border.width: 1
+                    radius: 4
+                }
+                onClicked: {
+
                 }
             }
         }
