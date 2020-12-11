@@ -182,12 +182,11 @@ bool ShopDataBase::insertIntoSoldTable(const QString &name, const QString &price
 bool ShopDataBase::removeFromOnSaleTable(const int id){
     QSqlQuery query;
 
-    query.prepare("DELETE FROM" ON_SALE_TABLE "WHERE id = :ID ;");
+    query.prepare("DELETE FROM " ON_SALE_TABLE " WHERE id = :ID ;");
     query.bindValue(":ID", id);
 
     if(!query.exec()){
-        std::cout<< "error delete from "<<ON_SALE_TABLE<<std::endl;
-        std::cout<< query.lastError().text().toStdString()<<std::endl;
+        qDebug()<< query.lastError().text();
         return false;
     } else {
         return true;
