@@ -140,7 +140,8 @@ Rectangle {
                             dialogVars.thisSize = sizeModel
                             dialogVars.thisMadeBy = madebyModel
                             dialogVars.thisImage = imageModel
-                            dialogVars.thisRecieveDate = recievedateModel
+                            dialogVars.thisRecieveDate = database.convertDate(
+                                        recievedateModel)
                             dialogVars.thisMaleFemale = maleorfemaleModel
                             moreDialog.open()
                         }
@@ -1446,7 +1447,7 @@ Rectangle {
                 anchors.topMargin: 5
                 anchors.rightMargin: 15
                 id: clothesRecDateDialogAdd
-                placeholderText: "Дата приема в формате dd:mm:yyyy"
+                placeholderText: "Дата приема в формате dd.mm.yyyy"
                 anchors.top: clothesMadeByDialogAdd.bottom
                 anchors.right: parent.right
                 font.bold: true
