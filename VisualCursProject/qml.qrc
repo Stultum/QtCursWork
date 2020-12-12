@@ -7,5 +7,6 @@
         <file>ReturnedFragment.qml</file>
         <file>mock.jpg</file>
         <file>splash.jfif</file>
+        <file>drop.png</file>
     </qresource>
 </RCC>
