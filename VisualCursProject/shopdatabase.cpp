@@ -211,6 +211,32 @@ bool ShopDataBase::insertIntoSoldTable(const QString &name, const QString &price
         return false;
 }
 
+bool ShopDataBase::insertIntoCashTable(const QVariantList &data){
+    QSqlQuery query;
+    query.prepare("INSERT INTO" CASH_TABLE " ( " TABLE_CASH " ) "
+            "VALUES (:Money)");
+    query.bindValue(":Money", data[0].toInt());
+
+    if(!query.exec()){
+        std::cout<< "error insert into "<<CASH_TABLE<<std::endl;
+        std::cout<< query.lastError().text().toStdString()<<std::endl;
+        return false;
+    } else {
+        return true;
+    }
+    return false;
+}
+
+bool ShopDataBase::insertIntoCashTable(const QString &money){
+    QVariantList data;
+    data.append(money);
+
+    if(insertIntoOnSaleTable(data))
+        return true;
+    else
+        return false;
+}
+
 bool ShopDataBase::removeFromOnSaleTable(const int id){
     QSqlQuery query;
 
@@ -250,6 +276,22 @@ bool ShopDataBase::removeFromSoldTable(const int id){
 
     if(!query.exec()){
         std::cout<< "error delete from "<<SOLD_TABLE<<std::endl;
+        std::cout<< query.lastError().text().toStdString()<<std::endl;
+        return false;
+    } else {
+        return true;
+    }
+    return false;
+}
+
+bool ShopDataBase::removeFromCashTable(const int id){
+    QSqlQuery query;
+
+    query.prepare("DELETE FROM" CASH_TABLE "WHERE id = :ID ;");
+    query.bindValue(":ID", id);
+
+    if(!query.exec()){
+        std::cout<< "error delete from "<<CASH_TABLE<<std::endl;
         std::cout<< query.lastError().text().toStdString()<<std::endl;
         return false;
     } else {
