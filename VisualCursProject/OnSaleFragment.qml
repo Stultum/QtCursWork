@@ -53,6 +53,8 @@ Rectangle {
                 height: 360
 
                 Rectangle {
+                    border.color: "#578CBF"
+                    border.width: 4
                     id: itemList
                     anchors.fill: parent
                     radius: 10
@@ -733,6 +735,8 @@ Rectangle {
         }
 
         Rectangle {
+            border.color: "#578CBF"
+            border.width: 4
             anchors.margins: -15
             id: itemListDialog
             anchors.fill: parent
@@ -1079,6 +1083,8 @@ Rectangle {
             anchors.fill: parent
             radius: 10
             color: "#9ACDFF"
+            border.color: "#578CBF"
+            border.width: 4
 
             Image {
                 anchors.top: parent.top
