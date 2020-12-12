@@ -15,7 +15,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp \
     shopdatabase.cpp \
-    onsalemodel.cpp
+    onsalemodel.cpp \
+    soldmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,4 +34,5 @@ HEADERS += \
     shopdatabase.h \
     shopdatabase.h \
     onsalemodel.h \
-    onsalemodel.h
+    onsalemodel.h \
+    soldmodel.h
