@@ -95,7 +95,7 @@ Rectangle {
                     }
 
                     Text {
-                        anchors.margins: 5
+                        anchors.margins: 15
                         id: clothesName
                         text: nameModel
                         anchors.top: clothesImage.bottom
@@ -112,28 +112,13 @@ Rectangle {
                     Text {
                         anchors.margins: 5
                         id: clothesPrice
-                        text: priceModel
+                        text: priceModel + " рублей"
                         anchors.top: clothesName.bottom
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        font.pixelSize: dp(18)
-                        font.bold: true
-                        renderType: Text.NativeRendering
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        color: "#1760A6"
-                    }
-
-                    Text {
-                        anchors.margins: 5
-                        id: clothesAvailable
-                        text: "available"
-                        anchors.top: clothesPrice.bottom
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        font.bold: true
                         anchors.bottom: parent.bottom
-                        font.pixelSize: dp(18)
+                        font.pixelSize: dp(24)
+                        font.bold: true
                         renderType: Text.NativeRendering
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -259,7 +244,16 @@ Rectangle {
                 y: controlCategory.height - 1
                 width: controlCategory.width
                 onAboutToHide: {
-                    onSaleModel.updateModelFilter(content.text)
+                    controlMaleRadio.checked
+                            == true ? onSaleModel.updateModelWithFilter(
+                                          controlCategory.displayText,
+                                          controlSize.displayText,
+                                          qsTr("Мужская"),
+                                          controlSortBy.displayText) : onSaleModel.updateModelWithFilter(
+                                          controlCategory.displayText,
+                                          controlSize.displayText,
+                                          qsTr("Женская"),
+                                          controlSortBy.displayText)
                 }
                 implicitHeight: listview.contentHeight
                 padding: 1
@@ -364,7 +358,16 @@ Rectangle {
                 implicitHeight: listviewSortBy.contentHeight
                 padding: 1
                 onAboutToHide: {
-                    onSaleModel.updateModelSort(contentSortBy.text)
+                    controlMaleRadio.checked
+                            == true ? onSaleModel.updateModelWithFilter(
+                                          controlCategory.displayText,
+                                          controlSize.displayText,
+                                          qsTr("Мужская"),
+                                          controlSortBy.displayText) : onSaleModel.updateModelWithFilter(
+                                          controlCategory.displayText,
+                                          controlSize.displayText,
+                                          qsTr("Женская"),
+                                          controlSortBy.displayText)
                 }
 
                 contentItem: ListView {
@@ -467,7 +470,16 @@ Rectangle {
                 implicitHeight: listviewSize.contentHeight
                 padding: 1
                 onAboutToHide: {
-                    onSaleModel.updateModelSize(contentSize.text)
+                    controlMaleRadio.checked
+                            == true ? onSaleModel.updateModelWithFilter(
+                                          controlCategory.displayText,
+                                          controlSize.displayText,
+                                          qsTr("Мужская"),
+                                          controlSortBy.displayText) : onSaleModel.updateModelWithFilter(
+                                          controlCategory.displayText,
+                                          controlSize.displayText,
+                                          qsTr("Женская"),
+                                          controlSortBy.displayText)
                 }
 
                 contentItem: ListView {
@@ -511,9 +523,18 @@ Rectangle {
             RadioButton {
                 id: controlMaleRadio
                 text: qsTr("Мужская одежда")
-                checked: false
+                checked: true
                 onClicked: {
-                    onSaleModel.updateModelSex(qsTr("Мужская"))
+                    controlMaleRadio.checked
+                            == true ? onSaleModel.updateModelWithFilter(
+                                          controlCategory.displayText,
+                                          controlSize.displayText,
+                                          qsTr("Мужская"),
+                                          controlSortBy.displayText) : onSaleModel.updateModelWithFilter(
+                                          controlCategory.displayText,
+                                          controlSize.displayText,
+                                          qsTr("Женская"),
+                                          controlSortBy.displayText)
                 }
 
                 indicator: Rectangle {
@@ -554,7 +575,16 @@ Rectangle {
                 checked: false
 
                 onClicked: {
-                    onSaleModel.updateModelSex(qsTr("Женская"))
+                    controlMaleRadio.checked
+                            == true ? onSaleModel.updateModelWithFilter(
+                                          controlCategory.displayText,
+                                          controlSize.displayText,
+                                          qsTr("Мужская"),
+                                          controlSortBy.displayText) : onSaleModel.updateModelWithFilter(
+                                          controlCategory.displayText,
+                                          controlSize.displayText,
+                                          qsTr("Женская"),
+                                          controlSortBy.displayText)
                 }
 
                 indicator: Rectangle {
@@ -589,44 +619,35 @@ Rectangle {
             }
         }
 
-        CheckBox {
+        Button {
             anchors.topMargin: 30
-            anchors.leftMargin: 15
+            anchors.leftMargin: 60
+            anchors.rightMargin: 60
             anchors.top: radioColumn.bottom
             anchors.right: parent.right
             anchors.left: parent.left
             id: controlInShop
-            text: qsTr("Есть в наличии")
-            checked: false
-
-            indicator: Rectangle {
-                id: ind
-                implicitWidth: 26
-                implicitHeight: 26
-                x: controlInShop.leftPadding
-                y: parent.height / 2 - height / 2
-                radius: 3
-                border.color: controlInShop.down ? "#47A4FF" : "#1760A6"
-
-                Rectangle {
-                    width: 14
-                    height: 14
-                    x: 6
-                    y: 6
-                    radius: 2
-                    color: controlInShop.down ? "#47A4FF" : "#1760A6"
-                    visible: controlInShop.checked
-                }
-            }
 
             contentItem: Text {
-                anchors.left: ind.right
-                anchors.leftMargin: 10
-                text: controlInShop.text
+                text: qsTr("Показать все товары")
                 font: controlInShop.font
                 opacity: enabled ? 1.0 : 0.3
                 color: controlInShop.down ? "#47A4FF" : "#1760A6"
+                horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+
+            background: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 40
+                opacity: enabled ? 1 : 0.3
+                border.color: controlInShop.down ? "#47A4FF" : "#1760A6"
+                border.width: 1
+                radius: 4
+            }
+            onClicked: {
+                onSaleModel.updateModel()
             }
         }
 
