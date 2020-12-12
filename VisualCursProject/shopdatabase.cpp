@@ -64,6 +64,7 @@ bool ShopDataBase::insertIntoOnSaleTable(const QVariantList &data){
 
 bool ShopDataBase::insertIntoOnSaleTable(const QString &name, const QString &price, const QString &category, const QString &size, const QString &madeby, const QString &image, const QString &recievedate, const QString &maleorfemale){
     QVariantList data;
+
     data.append(name);
     data.append(price);
     data.append(category);

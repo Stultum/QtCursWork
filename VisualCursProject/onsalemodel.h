@@ -31,10 +31,7 @@ signals:
 
 public slots:
     void updateModel();
-    void updateModelSize(const QString& size);
-    void updateModelFilter(const QString& filter);
-    void updateModelSort(const QString& size);
-    void updateModelSex(const QString& size);
+    void updateModelWithFilter(const QString& category, const QString& size, const QString& maleFemale, const QString& filter);
     int getId(int row);
 };
 
