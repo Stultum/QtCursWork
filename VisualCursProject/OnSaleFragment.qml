@@ -917,7 +917,7 @@ Rectangle {
                 anchors.topMargin: 5
                 anchors.rightMargin: 15
                 id: clothesRecDateDialog
-                text: dialogVars.thisRecieveDate
+                text: database.convertDate(dialogVars.thisRecieveDate)
                 anchors.top: clothesMadeByDialog.bottom
                 anchors.right: parent.right
                 font.pointSize: 13
@@ -1446,11 +1446,11 @@ Rectangle {
                 anchors.topMargin: 5
                 anchors.rightMargin: 15
                 id: clothesRecDateDialogAdd
-                placeholderText: "Дата приема в формате dd:mm:yyyy"
+                placeholderText: "Дата приема в формате dd.mm.yyyy"
                 anchors.top: clothesMadeByDialogAdd.bottom
                 anchors.right: parent.right
                 font.bold: true
-                text: dialogVars.thisRecieveDate
+                text: database.convertDate(dialogVars.thisRecieveDate)
                 font.pointSize: 10
                 maximumLength: 10
                 font.italic: false
@@ -1614,7 +1614,7 @@ Rectangle {
             Label {
                 id: errorLabel
                 visible: false
-                anchors.top: buttonDiscard
+                anchors.top: buttonDiscard.bottom
                 anchors.right: parent.right
                 horizontalAlignment: "AlignHCenter"
                 anchors.left: parent.left
