@@ -408,3 +408,5 @@ bool ShopDataBase::removeFromCashTable(const int id){
 //void ShopDataBase::renewCash(int plusCash){
 //    totalCash+=plusCash;
 //}
+
+
