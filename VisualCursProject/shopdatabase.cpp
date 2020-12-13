@@ -300,7 +300,7 @@ bool ShopDataBase::removeFromOnSaleTable(const int id){
 bool ShopDataBase::removeFromReturnedTable(const int id){
     QSqlQuery query;
 
-    query.prepare("DELETE FROM" RETURNED_TABLE "WHERE id = :ID ;");
+    query.prepare("DELETE FROM " RETURNED_TABLE " WHERE id = :ID ;");
     query.bindValue(":ID", id);
 
     if(!query.exec()){
@@ -316,7 +316,7 @@ bool ShopDataBase::removeFromReturnedTable(const int id){
 bool ShopDataBase::removeFromSoldTable(const int id){
     QSqlQuery query;
 
-    query.prepare("DELETE FROM" SOLD_TABLE "WHERE id = :ID ;");
+    query.prepare("DELETE FROM " SOLD_TABLE " WHERE id = :ID ;");
     query.bindValue(":ID", id);
 
     if(!query.exec()){
