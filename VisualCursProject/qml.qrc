@@ -10,5 +10,6 @@
         <file>drop.png</file>
         <file>SellItemFragment.qml</file>
         <file>ReturnItemFragment.qml</file>
+        <file>HelpFragment.qml</file>
     </qresource>
 </RCC>

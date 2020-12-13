@@ -150,6 +150,7 @@ Loader {
                         loader.source = "ReturnItemFragment.qml"
                         break
                     case 5:
+                        loader.source = "HelpFragment.qml"
                         break
                     default:
                         loader.source = "OnSaleFragment.qml"
