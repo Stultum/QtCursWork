@@ -8,5 +8,7 @@
         <file>mock.jpg</file>
         <file>splash.jfif</file>
         <file>drop.png</file>
+        <file>SellItemFragment.qml</file>
+        <file>ReturnItemFragment.qml</file>
     </qresource>
 </RCC>
