@@ -70,3 +70,8 @@ void OnSaleModel::updateModelWithFilter(const QString& category, const QString& 
 int OnSaleModel::getId(int row){
     return this->data(this->index(row, 0), IdRole).toInt();
 }
+
+void OnSaleModel::updateModelWithSearch(const QString& key){
+    QString prepare = "SELECT id, Name, Price, Category, Size, MadeBy, Image, RecieveDate, MaleOrFemale FROM ClothesOnSale WHERE Name='" + key + "'";
+     this->setQuery(prepare);
+}

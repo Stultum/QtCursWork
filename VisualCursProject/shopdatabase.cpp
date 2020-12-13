@@ -43,6 +43,7 @@ void ShopDataBase::closeDataBase(){
 
 bool ShopDataBase::insertIntoOnSaleTable(const QVariantList &data){
     QSqlQuery query;
+        qDebug()<<"entered insert sale";
     QString first = data[6].toString();
         QString day = "";
         QString year = "";
@@ -95,7 +96,7 @@ bool ShopDataBase::insertIntoOnSaleTable(const QVariantList &data){
 
 bool ShopDataBase::insertIntoOnSaleTable(const QString &name, const QString &price, const QString &category, const QString &size, const QString &madeby, const QString &image, const QString &recievedate, const QString &maleorfemale){
     QVariantList data;
-
+    qDebug()<<"entered insert sale";
 
 
     data.append(name);
@@ -118,6 +119,7 @@ bool ShopDataBase::insertIntoReturnedTable(const QVariantList &data){
     QSqlQuery query;
     QString first = data[6].toString();
         QString day = "";
+                qDebug()<<"entered insert return";
         QString year = "";
         QString month = "";
 
@@ -144,7 +146,7 @@ bool ShopDataBase::insertIntoReturnedTable(const QVariantList &data){
             year += first[8];
     }
         QString date = year + "." + month + "." + day;
-    query.prepare("INSERT INTO" RETURNED_TABLE " ( "
+    query.prepare("INSERT INTO " RETURNED_TABLE " ( "
                   TABLE_NAME ", "
                   TABLE_PRICE ", "
                   TABLE_CATEGORY ", "
@@ -176,6 +178,7 @@ bool ShopDataBase::insertIntoReturnedTable(const QVariantList &data){
 }
 
 bool ShopDataBase::insertIntoReturnedTable(const QString &name, const QString &price, const QString &category, const QString &size, const QString &madeby, const QString &image, const QString &returndate, const QString &maleorfemale, const QString &reason){
+        qDebug()<<"entered insert return";
     QVariantList data;
     data.append(name);
     data.append(price);
@@ -187,7 +190,7 @@ bool ShopDataBase::insertIntoReturnedTable(const QString &name, const QString &p
     data.append(maleorfemale);
     data.append(reason);
 
-    if(insertIntoOnSaleTable(data))
+    if(insertIntoReturnedTable(data))
         return true;
     else
         return false;
@@ -195,6 +198,7 @@ bool ShopDataBase::insertIntoReturnedTable(const QString &name, const QString &p
 
 bool ShopDataBase::insertIntoSoldTable(const QVariantList &data){
     QSqlQuery query;
+        qDebug()<<"entered insert sold";
     QString first = data[6].toString();
         QString day = "";
         QString year = "";
@@ -223,7 +227,15 @@ bool ShopDataBase::insertIntoSoldTable(const QVariantList &data){
             year += first[8];
     }
         QString date = year + "." + month + "." + day;
-    query.prepare("INSERT INTO" SOLD_TABLE " ( "
+        query.bindValue(":Name", data[0].toString());
+        query.bindValue(":Price", data[1].toString());
+        query.bindValue(":Category", data[2].toString());
+        query.bindValue(":Size", data[3].toString());
+        query.bindValue(":MadeBy", data[4].toString());
+        query.bindValue(":Image", data[5].toString());
+        query.bindValue(":RecieveDate", date);
+        query.bindValue(":MaleFemale", data[7].toString());
+    query.prepare("INSERT INTO " SOLD_TABLE " ( "
                   TABLE_NAME ", "
                   TABLE_PRICE ", "
                   TABLE_CATEGORY ", "
@@ -244,7 +256,7 @@ bool ShopDataBase::insertIntoSoldTable(const QVariantList &data){
 
     if(!query.exec()){
         std::cout<< "error insert into "<<SOLD_TABLE<<std::endl;
-        std::cout<< query.lastError().text().toStdString()<<std::endl;
+        qDebug()<< query.lastError().text();
         return false;
     } else {
         return true;
@@ -253,6 +265,7 @@ bool ShopDataBase::insertIntoSoldTable(const QVariantList &data){
 }
 
 bool ShopDataBase::insertIntoSoldTable(const QString &name, const QString &price, const QString &category, const QString &size, const QString &madeby, const QString &image, const QString &solddate, const QString &maleorfemale){
+    qDebug()<<"entered insert sold";
     QVariantList data;
     data.append(name);
     data.append(price);
@@ -263,7 +276,7 @@ bool ShopDataBase::insertIntoSoldTable(const QString &name, const QString &price
     data.append(solddate);
     data.append(maleorfemale);
 
-    if(insertIntoOnSaleTable(data))
+    if(insertIntoSoldTable(data))
         return true;
     else
         return false;

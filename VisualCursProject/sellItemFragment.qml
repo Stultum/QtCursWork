@@ -174,106 +174,31 @@ Rectangle {
             font.family: "Times"
             font.pointSize: 13
             font.bold: true
-            text: "Категория товара"
+            horizontalAlignment: Text.AlignHCenter
+            text: "Поиск товара"
             color: "#1760A6"
         }
 
-        ComboBox {
-            id: controlCategory
-            anchors.margins: 10
+        TextField {
+            anchors.topMargin: 20
+            anchors.leftMargin: 15
+            anchors.rightMargin: 15
+            id: searchField
+            height: 40
             anchors.top: categoryComboBoxLabel.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-
-            model: ["Верхняя одежда", "Обувь", "Свитеры/Джемперы", "Брюки/Джинсы", "Футболки/Блузки/Рубашки", "Юбки/Платья"]
-
-            delegate: ItemDelegate {
-                width: controlCategory.width
-                contentItem: Text {
-                    text: modelData
-                    color: hovered ? "#1760A6" : "#47A4FF"
-                    font: controlCategory.font
-                    elide: Text.ElideRight
-                    verticalAlignment: Text.AlignVCenter
-                }
-                highlighted: controlCategory.highlightedIndex == index
-            }
-
-            indicator: Canvas {
-                id: canvas
-                x: controlCategory.width - width - controlCategory.rightPadding
-                y: controlCategory.topPadding + (controlCategory.availableHeight - height) / 2
-                width: 12
-                height: 8
-                contextType: "2d"
-                rotation: listview.visible ? 180 : 0
-
-                Connections {
-                    target: controlCategory
-                    onPressedChanged: canvas.requestPaint()
-                }
-
-                onPaint: {
-                    context.reset()
-                    context.moveTo(0, 0)
-                    context.lineTo(width, 0)
-                    context.lineTo(width / 2, height)
-                    context.closePath()
-                    context.fillStyle = controlCategory.pressed ? "#1760A6" : "#47A4FF"
-                    context.fill()
-                }
-            }
-
-            contentItem: Text {
-                id: content
-                text: controlCategory.displayText
-                font: controlCategory.font
-                color: controlCategory.hovered ? "#1760A6" : "#47A4FF"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                elide: Text.ElideRight
-            }
-
-            background: Rectangle {
-                implicitWidth: 120
-                implicitHeight: 40
-                border.color: controlCategory.hovered ? "#1760A6" : "#47A4FF"
-                border.width: controlCategory.visualFocus ? 5 : 3
-                radius: 4
-            }
-
-            popup: Popup {
-                y: controlCategory.height - 1
-                width: controlCategory.width
-                onAboutToHide: {
-                    controlMaleRadio.checked
-                            == true ? onSaleModel.updateModelWithFilter(
-                                          controlCategory.displayText,
-                                          controlSize.displayText,
-                                          qsTr("Мужская"),
-                                          controlSortBy.displayText) : onSaleModel.updateModelWithFilter(
-                                          controlCategory.displayText,
-                                          controlSize.displayText,
-                                          qsTr("Женская"),
-                                          controlSortBy.displayText)
-                }
-                implicitHeight: listview.contentHeight
-                padding: 1
-
-                contentItem: ListView {
-                    id: listview
-                    clip: true
-                    model: controlCategory.popup.visible ? controlCategory.delegateModel : null
-                    currentIndex: controlCategory.highlightedIndex
-
-                    ScrollIndicator.vertical: ScrollIndicator {
-                    }
-                }
-
-                background: Rectangle {
-                    border.color: controlCategory.hovered ? "#1760A6" : "#47A4FF"
-                    radius: 4
-                }
+            placeholderText: "Введите название товара"
+            font.bold: true
+            font.pointSize: 10
+            maximumLength: 22
+            font.italic: false
+            renderType: Text.NativeRendering
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            color: "#1760A6"
+            onTextChanged: {
+                onSaleModel.updateModelWithSearch(searchField.text)
             }
         }
 
@@ -281,7 +206,7 @@ Rectangle {
             anchors.topMargin: 30
             anchors.leftMargin: 60
             anchors.rightMargin: 60
-            anchors.top: controlCategory.bottom
+            anchors.top: searchField.bottom
             anchors.right: parent.right
             anchors.left: parent.left
             id: controlInShop
@@ -589,17 +514,17 @@ Rectangle {
 
             Button {
                 anchors.margins: 20
-                width: 170
-                anchors.right: buttonChange.left
+                anchors.right: parent.right
                 anchors.left: parent.left
                 anchors.bottom: parent.bottom
-                id: buttonDelete
+                id: buttonSell
 
                 contentItem: Text {
-                    text: "Удалить товар"
-                    font: controlAddNew.font
+                    text: "Продать товар"
+                    font.bold: true
+                    font.pixelSize: 10
                     opacity: enabled ? 1.0 : 0.3
-                    color: controlAddNew.down ? "#47A4FF" : "#1760A6"
+                    color: buttonSell.down ? "#47A4FF" : "#1760A6"
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
@@ -609,29 +534,102 @@ Rectangle {
                     implicitWidth: 100
                     implicitHeight: 40
                     opacity: enabled ? 1 : 0.3
-                    border.color: controlAddNew.down ? "#47A4FF" : "#1760A6"
+                    border.color: buttonSell.down ? "#47A4FF" : "#1760A6"
                     border.width: 1
                     radius: 4
                 }
                 onClicked: {
+                    confirmDialog.open()
+                }
+            }
+        }
+    }
+    Dialog {
+        id: confirmDialog
+        height: 200
+        width: 300
+        x: 500
+        y: 300
+        Rectangle {
+            border.color: "#578CBF"
+            border.width: 4
+            anchors.margins: -15
+            anchors.fill: parent
+            radius: 10
+            color: "#9ACDFF"
+
+            Label {
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.topMargin: 50
+                anchors.leftMargin: 15
+                anchors.rightMargin: 15
+                text: "    Вы действительно\n  хотите продать товар?"
+                font.family: "Times"
+                font.pointSize: 13
+                font.bold: true
+                color: "#1760A6"
+            }
+
+            Button {
+                id: nopeButton
+                anchors.bottomMargin: 10
+                anchors.leftMargin: 30
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                anchors.margins: 10
+
+                contentItem: Text {
+                    text: "Да"
+                    font.bold: true
+                    font.pixelSize: 10
+                    opacity: enabled ? 1.0 : 0.3
+                    color: nopeButton.down ? "#47A4FF" : "#1760A6"
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                }
+
+                background: Rectangle {
+                    implicitWidth: 100
+                    implicitHeight: 40
+                    opacity: enabled ? 1 : 0.3
+                    border.color: nopeButton.down ? "#47A4FF" : "#1760A6"
+                    border.width: 1
+                    radius: 4
+                }
+
+                onClicked: {
                     database.removeFromOnSaleTable(dialogVars.thisId)
-                    moreDialog.close()
+                    database.insertIntoSoldTable(dialogVars.thisName,
+                                                 dialogVars.thisPrice,
+                                                 dialogVars.thisCategory,
+                                                 dialogVars.thisSize,
+                                                 dialogVars.thisMadeBy,
+                                                 dialogVars.thisImage,
+                                                 dialogVars.thisRecieveDate,
+                                                 dialogVars.thisMaleFemale)
                     onSaleModel.updateModel()
+                    SoldModel.updateModel()
+                    confirmDialog.close()
+                    moreDialog.close()
                 }
             }
 
             Button {
-                anchors.margins: 20
-                width: 170
+                id: yepButton
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-                id: buttonChange
+                anchors.bottomMargin: 10
+                anchors.rightMargin: 30
 
                 contentItem: Text {
-                    text: "Редактировать товар"
-                    font: controlAddNew.font
+                    text: "Нет"
+                    font.bold: true
+                    font.pixelSize: 10
                     opacity: enabled ? 1.0 : 0.3
-                    color: controlAddNew.down ? "#47A4FF" : "#1760A6"
+                    color: yepButton.down ? "#47A4FF" : "#1760A6"
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
@@ -641,13 +639,13 @@ Rectangle {
                     implicitWidth: 100
                     implicitHeight: 40
                     opacity: enabled ? 1 : 0.3
-                    border.color: controlAddNew.down ? "#47A4FF" : "#1760A6"
+                    border.color: yepButton.down ? "#47A4FF" : "#1760A6"
                     border.width: 1
                     radius: 4
                 }
+
                 onClicked: {
-                    dialogVars.addOrChange = "Сохранить изменения"
-                    addDialog.open()
+                    confirmDialog.close()
                 }
             }
         }

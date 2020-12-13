@@ -33,6 +33,7 @@ public slots:
     void updateModel();
     void updateModelWithFilter(const QString& category, const QString& size, const QString& maleFemale, const QString& filter);
     int getId(int row);
+    void updateModelWithSearch(const QString& key);
 };
 
 #endif // ONSALEMODEL_H
