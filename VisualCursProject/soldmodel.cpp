@@ -128,3 +128,8 @@ void SoldModel::updateModelWithFilter(const QString& category, const QString& fi
 int SoldModel::getId(int row){
     return this->data(this->index(row, 0), IdRole).toInt();
 }
+
+void SoldModel::updateModelWithSearch(const QString& key){
+    QString prepare = "SELECT id, Name, Price, Category, Size, MadeBy, Image, SoldDate, MaleOrFemale FROM SoldClothes WHERE Name='" + key + "'";
+     this->setQuery(prepare);
+}

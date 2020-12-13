@@ -33,6 +33,7 @@ public slots:
     void updateModel();
     void updateModelWithFilter(const QString& category, const QString& filter, const QString& firstDate, const QString& secondDate);
     int getId(int row);
+    void updateModelWithSearch(const QString& key);
 };
 
 #endif // SOLDMODEL_H
