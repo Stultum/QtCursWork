@@ -9,7 +9,6 @@
 #include <QFile>
 #include <QDate>
 #include <QDebug>
-
 #define ON_SALE_TABLE "ClothesOnSale"
 #define RETURNED_TABLE "ReturnedClothes"
 #define SOLD_TABLE "SoldClothes"
@@ -26,9 +25,10 @@
 #define TABLE_RETURN_DATE "ReturnDate"
 #define TABLE_REASON_OF_RETURN "ReasonOfReturn"
 #define TABLE_SOLD_DATE "SoldDate"
-#define TABLE_CASH "TotalCash"
+#define TABLE_CASH "Cash"
 #define TABLE_COUNT "ClothesCount"
 #define DATABASE_NAME "shopDataBase.db"
+
 
 class ShopDataBase : public QObject
 {

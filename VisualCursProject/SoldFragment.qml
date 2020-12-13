@@ -246,16 +246,10 @@ Rectangle {
                 y: controlCategory.height - 1
                 width: controlCategory.width
                 onAboutToHide: {
-                    controlMaleRadio.checked
-                            == true ? SoldModel.updateModelWithFilter(
-                                          controlCategory.displayText,
-                                          controlSize.displayText,
-                                          qsTr("Мужская"),
-                                          controlSortBy.displayText) : SoldModel.updateModelWithFilter(
-                                          controlCategory.displayText,
-                                          controlSize.displayText,
-                                          qsTr("Женская"),
-                                          controlSortBy.displayText)
+                    SoldModel.updateModelWithFilter(
+                                controlCategory.displayText,
+                                controlSortBy.displayText, soldDateFrom.text,
+                                soldDateTo.text)
                 }
                 implicitHeight: listview.contentHeight
                 padding: 1
@@ -498,13 +492,47 @@ Rectangle {
             }
         }
 
+
+        //        Label {
+        //            anchors.leftMargin: 70
+        //            anchors.topMargin: 50
+        //            anchors.top: controlInShop.bottom
+        //            anchors.left: parent.left
+        //            anchors.right: parent.right
+        //            id: totalCashLabel
+        //            font.family: "Times"
+        //            font.pointSize: 13
+        //            font.bold: true
+        //            text: "Итоговая прибыль:"
+        //            color: "#1760A6"
+        //        }
+
+        //        ListView {
+        //            model: CashModel
+        //            anchors.leftMargin: 100
+        //            anchors.topMargin: 20
+        //            anchors.top: totalCashLabel.bottom
+        //            anchors.left: parent.left
+        //            anchors.right: parent.right
+        //            delegate: Item {
+        //                anchors.fill: parent
+        //                Text {
+        //                    id: totalCashValue
+        //                    font.family: "Times"
+        //                    font.pointSize: 13
+        //                    font.bold: true
+        //                    text: moneyModel + " рублей"
+        //                    color: "#1760A6"
+        //                }
+        //            }
+        //        }
         Button {
             anchors.margins: 10
             anchors.right: parent.right
             anchors.left: parent.left
             anchors.bottom: parent.bottom
             id: controlAddNew
-            text: qsTr("Добавить новый товар")
+            text: qsTr("Распечатать отчет")
 
             contentItem: Text {
                 text: controlAddNew.text
@@ -525,8 +553,7 @@ Rectangle {
                 radius: 4
             }
             onClicked: {
-                addDialog.open()
-                dialogVars.addOrChange = "Добавить"
+
             }
         }
     }
@@ -1287,7 +1314,7 @@ Rectangle {
                 font.family: "Times"
                 font.pointSize: 13
                 font.bold: true
-                text: "Дата приема"
+                text: "Дата продажи"
                 color: "#1760A6"
             }
 
