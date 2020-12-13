@@ -57,13 +57,13 @@ void ReturnedModel::updateModelWithFilter(const QString& category, const QString
     QString prepare = "";
 
     if(filter == topWear){
-        prepare = "SELECT id, Name, Price, Category, Size, MadeBy, Image, ReturnDate, MaleOrFemale FROM ReturnedClothes WHERE Category='" + category + "' AND ReasonOfReturn='" + reason + "' ORDER BY Price DESC";
+        prepare = "SELECT id, Name, Price, Category, Size, MadeBy, Image, ReturnDate, MaleOrFemale, ReasonOfReturn FROM ReturnedClothes WHERE Category='" + category + "' AND ReasonOfReturn='" + reason + "' ORDER BY Price DESC";
     } else if(filter == footWear){
-        prepare = "SELECT id, Name, Price, Category, Size, MadeBy, Image, ReturnDate, MaleOrFemale FROM ReturnedClothes WHERE Category='" + category + "' AND ReasonOfReturn='" + reason + "' ORDER BY Price DESC";
+        prepare = "SELECT id, Name, Price, Category, Size, MadeBy, Image, ReturnDate, MaleOrFemale, ReasonOfReturn FROM ReturnedClothes WHERE Category='" + category + "' AND ReasonOfReturn='" + reason + "' ORDER BY Price DESC";
     } else if(filter == warmWear){
-        prepare = "SELECT id, Name, Price, Category, Size, MadeBy, Image, ReturnDate, MaleOrFemale FROM ReturnedClothes WHERE Category='" + category + "' AND ReasonOfReturn='" + reason + "' ORDER BY RecieveDate ASC";
+        prepare = "SELECT id, Name, Price, Category, Size, MadeBy, Image, ReturnDate, MaleOrFemale, ReasonOfReturn FROM ReturnedClothes WHERE Category='" + category + "' AND ReasonOfReturn='" + reason + "' ORDER BY ReturnDate ASC";
     } else if(filter == botWear){
-        prepare = "SELECT id, Name, Price, Category, Size, MadeBy, Image, ReturnDate, MaleOrFemale FROM ReturnedClothes WHERE Category='" + category + "' AND ReasonOfReturn='" + reason + "' ORDER BY RecieveDate DESC";
+        prepare = "SELECT id, Name, Price, Category, Size, MadeBy, Image, ReturnDate, MaleOrFemale, ReasonOfReturn FROM ReturnedClothes WHERE Category='" + category + "' AND ReasonOfReturn='" + reason + "' ORDER BY ReturnDate DESC";
     }
     this->setQuery(prepare);
 }
