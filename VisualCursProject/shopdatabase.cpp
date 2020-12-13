@@ -44,33 +44,33 @@ void ShopDataBase::closeDataBase(){
 bool ShopDataBase::insertIntoOnSaleTable(const QVariantList &data){
     QSqlQuery query;
     QString first = data[6].toString();
-    QString day = "";
-    QString year = "";
-    QString month = "";
+        QString day = "";
+        QString year = "";
+        QString month = "";
 
-    if(first.size() == 10)
-    {
-    day += first[0];
-    day += first[1];
-    month += first[3];
-    month += first[4];
-    year += first[6];
-    year += first[7];
-    year += first[8];
-    year += first[9];
-}
-
-    if(first.size() == 9)
-    {
+        if(first.size() == 10)
+        {
         day += first[0];
-        month += first[2];
+        day += first[1];
         month += first[3];
-        year += first[5];
+        month += first[4];
         year += first[6];
         year += first[7];
         year += first[8];
-}
-    QString date = year + "." + month + "." + day;
+        year += first[9];
+    }
+
+        if(first.size() == 9)
+        {
+            day += first[0];
+            month += first[2];
+            month += first[3];
+            year += first[5];
+            year += first[6];
+            year += first[7];
+            year += first[8];
+    }
+        QString date = year + "." + month + "." + day;
 
     query.prepare("INSERT INTO ClothesOnSale ( Name, Price, Category, Size, MadeBy, Image, RecieveDate, MaleOrFemale ) "
             "VALUES (:Name, :Price, :Category, :Size, :MadeBy, :Image, :RecieveDate, :MaleFemale)");
@@ -96,6 +96,8 @@ bool ShopDataBase::insertIntoOnSaleTable(const QVariantList &data){
 bool ShopDataBase::insertIntoOnSaleTable(const QString &name, const QString &price, const QString &category, const QString &size, const QString &madeby, const QString &image, const QString &recievedate, const QString &maleorfemale){
     QVariantList data;
 
+
+
     data.append(name);
     data.append(price);
     data.append(category);
@@ -114,6 +116,34 @@ bool ShopDataBase::insertIntoOnSaleTable(const QString &name, const QString &pri
 
 bool ShopDataBase::insertIntoReturnedTable(const QVariantList &data){
     QSqlQuery query;
+    QString first = data[6].toString();
+        QString day = "";
+        QString year = "";
+        QString month = "";
+
+        if(first.size() == 10)
+        {
+        day += first[0];
+        day += first[1];
+        month += first[3];
+        month += first[4];
+        year += first[6];
+        year += first[7];
+        year += first[8];
+        year += first[9];
+    }
+
+        if(first.size() == 9)
+        {
+            day += first[0];
+            month += first[2];
+            month += first[3];
+            year += first[5];
+            year += first[6];
+            year += first[7];
+            year += first[8];
+    }
+        QString date = year + "." + month + "." + day;
     query.prepare("INSERT INTO" RETURNED_TABLE " ( "
                   TABLE_NAME ", "
                   TABLE_PRICE ", "
@@ -131,7 +161,7 @@ bool ShopDataBase::insertIntoReturnedTable(const QVariantList &data){
     query.bindValue(":Size", data[3].toString());
     query.bindValue(":MadeBy", data[4].toString());
     query.bindValue(":Image", data[5].toString());
-    query.bindValue(":ReturnDate", data[6].toString());
+    query.bindValue(":ReturnDate", date);
     query.bindValue(":MaleFemale", data[7].toString());
     query.bindValue(":Reason", data[8].toString());
 
@@ -165,6 +195,34 @@ bool ShopDataBase::insertIntoReturnedTable(const QString &name, const QString &p
 
 bool ShopDataBase::insertIntoSoldTable(const QVariantList &data){
     QSqlQuery query;
+    QString first = data[6].toString();
+        QString day = "";
+        QString year = "";
+        QString month = "";
+
+        if(first.size() == 10)
+        {
+        day += first[0];
+        day += first[1];
+        month += first[3];
+        month += first[4];
+        year += first[6];
+        year += first[7];
+        year += first[8];
+        year += first[9];
+    }
+
+        if(first.size() == 9)
+        {
+            day += first[0];
+            month += first[2];
+            month += first[3];
+            year += first[5];
+            year += first[6];
+            year += first[7];
+            year += first[8];
+    }
+        QString date = year + "." + month + "." + day;
     query.prepare("INSERT INTO" SOLD_TABLE " ( "
                   TABLE_NAME ", "
                   TABLE_PRICE ", "
@@ -181,7 +239,7 @@ bool ShopDataBase::insertIntoSoldTable(const QVariantList &data){
     query.bindValue(":Size", data[3].toString());
     query.bindValue(":MadeBy", data[4].toString());
     query.bindValue(":Image", data[5].toString());
-    query.bindValue(":SoldDate", data[6].toString());
+    query.bindValue(":SoldDate", date);
     query.bindValue(":MaleFemale", data[7].toString());
 
     if(!query.exec()){
@@ -204,32 +262,6 @@ bool ShopDataBase::insertIntoSoldTable(const QString &name, const QString &price
     data.append(image);
     data.append(solddate);
     data.append(maleorfemale);
-
-    if(insertIntoOnSaleTable(data))
-        return true;
-    else
-        return false;
-}
-
-bool ShopDataBase::insertIntoCashTable(const QVariantList &data){
-    QSqlQuery query;
-    query.prepare("INSERT INTO" CASH_TABLE " ( " TABLE_CASH " ) "
-            "VALUES (:Money)");
-    query.bindValue(":Money", data[0].toInt());
-
-    if(!query.exec()){
-        std::cout<< "error insert into "<<CASH_TABLE<<std::endl;
-        std::cout<< query.lastError().text().toStdString()<<std::endl;
-        return false;
-    } else {
-        return true;
-    }
-    return false;
-}
-
-bool ShopDataBase::insertIntoCashTable(const QString &money){
-    QVariantList data;
-    data.append(money);
 
     if(insertIntoOnSaleTable(data))
         return true;
@@ -284,22 +316,6 @@ bool ShopDataBase::removeFromSoldTable(const int id){
     return false;
 }
 
-bool ShopDataBase::removeFromCashTable(const int id){
-    QSqlQuery query;
-
-    query.prepare("DELETE FROM" CASH_TABLE "WHERE id = :ID ;");
-    query.bindValue(":ID", id);
-
-    if(!query.exec()){
-        std::cout<< "error delete from "<<CASH_TABLE<<std::endl;
-        std::cout<< query.lastError().text().toStdString()<<std::endl;
-        return false;
-    } else {
-        return true;
-    }
-    return false;
-}
-
 bool ShopDataBase::getByFilter(const QString& filter){
     QSqlQuery query;
     query.prepare("SELECT *  FROM "
@@ -315,7 +331,6 @@ bool ShopDataBase::getByFilter(const QString& filter){
     }
     return false;
 }
-
 QString ShopDataBase::convertDate(QString dateToFlip){
     QString first = dateToFlip;
     QString day = "";
@@ -348,3 +363,48 @@ QString ShopDataBase::convertDate(QString dateToFlip){
     return date;
 }
 
+bool ShopDataBase::insertIntoCashTable(const QVariantList &data){
+    QSqlQuery query;
+    query.prepare("INSERT INTO" CASH_TABLE " ( " TABLE_CASH " ) "
+            "VALUES (:Money)");
+    query.bindValue(":Money", data[0].toInt());
+
+    if(!query.exec()){
+        std::cout<< "error insert into "<<CASH_TABLE<<std::endl;
+        std::cout<< query.lastError().text().toStdString()<<std::endl;
+        return false;
+    } else {
+        return true;
+    }
+    return false;
+}
+
+bool ShopDataBase::insertIntoCashTable(const QString &money){
+    QVariantList data;
+    data.append(money);
+
+    if(insertIntoOnSaleTable(data))
+        return true;
+    else
+        return false;
+}
+
+bool ShopDataBase::removeFromCashTable(const int id){
+    QSqlQuery query;
+
+    query.prepare("DELETE FROM" CASH_TABLE "WHERE id = :ID ;");
+    query.bindValue(":ID", id);
+
+    if(!query.exec()){
+        std::cout<< "error delete from "<<CASH_TABLE<<std::endl;
+        std::cout<< query.lastError().text().toStdString()<<std::endl;
+        return false;
+    } else {
+        return true;
+    }
+    return false;
+}
+
+//void ShopDataBase::renewCash(int plusCash){
+//    totalCash+=plusCash;
+//}

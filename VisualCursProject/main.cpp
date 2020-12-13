@@ -5,6 +5,9 @@
 
 #include "shopdatabase.h"
 #include "onsalemodel.h"
+#include "soldmodel.h"
+#include "onsalemodel.h"
+#include "cashmodel.h"
 
 using namespace std;
 
@@ -23,8 +26,12 @@ int main(int argc, char *argv[])
     database.connectToDataBase();
 
     OnSaleModel *onSaleModel = new OnSaleModel();
+    SoldModel* soldModel = new SoldModel();
+    CashModel* cashModel = new CashModel();
 
     engine.rootContext()->setContextProperty("onSaleModel", onSaleModel);
+    engine.rootContext()->setContextProperty("SoldModel", soldModel);
+    engine.rootContext()->setContextProperty("CashModel", cashModel);
     engine.rootContext()->setContextProperty("database", &database);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

@@ -53,6 +53,8 @@ Rectangle {
                 height: 360
 
                 Rectangle {
+                    border.color: "#578CBF"
+                    border.width: 4
                     id: itemList
                     anchors.fill: parent
                     radius: 10
@@ -733,6 +735,8 @@ Rectangle {
         }
 
         Rectangle {
+            border.color: "#578CBF"
+            border.width: 4
             anchors.margins: -15
             id: itemListDialog
             anchors.fill: parent
@@ -1079,6 +1083,8 @@ Rectangle {
             anchors.fill: parent
             radius: 10
             color: "#9ACDFF"
+            border.color: "#578CBF"
+            border.width: 4
 
             Image {
                 anchors.top: parent.top
@@ -1450,7 +1456,7 @@ Rectangle {
                 anchors.top: clothesMadeByDialogAdd.bottom
                 anchors.right: parent.right
                 font.bold: true
-                text: database.convertDate(dialogVars.thisRecieveDate)
+                                text: database.convertDate(dialogVars.thisRecieveDate)
                 font.pointSize: 10
                 maximumLength: 10
                 font.italic: false
