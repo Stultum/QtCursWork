@@ -61,4 +61,3 @@ public slots:
 
 
 #endif // SHOPDATABASE_H
-

@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     shopdatabase.cpp \
     onsalemodel.cpp \
     soldmodel.cpp \
-    soldmodel.cpp
+    cashmodel.cpp \
+    returnedmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -37,4 +38,5 @@ HEADERS += \
     onsalemodel.h \
     onsalemodel.h \
     soldmodel.h \
-    cashmodel.h
+    cashmodel.h \
+    returnedmodel.h

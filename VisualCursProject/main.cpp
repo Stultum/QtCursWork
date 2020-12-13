@@ -8,6 +8,7 @@
 #include "soldmodel.h"
 #include "onsalemodel.h"
 #include "cashmodel.h"
+#include "returnedmodel.h"
 
 using namespace std;
 
@@ -28,11 +29,14 @@ int main(int argc, char *argv[])
     OnSaleModel *onSaleModel = new OnSaleModel();
     SoldModel* soldModel = new SoldModel();
     CashModel* cashModel = new CashModel();
+    ReturnedModel* returnModel = new ReturnedModel();
 
     engine.rootContext()->setContextProperty("onSaleModel", onSaleModel);
     engine.rootContext()->setContextProperty("SoldModel", soldModel);
     engine.rootContext()->setContextProperty("CashModel", cashModel);
+    engine.rootContext()->setContextProperty("ReturnModel", returnModel);
     engine.rootContext()->setContextProperty("database", &database);
+
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
