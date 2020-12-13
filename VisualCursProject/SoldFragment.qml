@@ -913,7 +913,7 @@ Rectangle {
                 font.family: "Times"
                 font.pointSize: 13
                 font.bold: true
-                text: "Дата приема"
+                text: "Дата продажи"
                 color: "#1760A6"
             }
 
