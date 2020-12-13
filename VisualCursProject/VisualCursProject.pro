@@ -17,7 +17,7 @@ SOURCES += main.cpp \
     shopdatabase.cpp \
     onsalemodel.cpp \
     soldmodel.cpp \
-    cashmodel.cpp
+    soldmodel.cpp
 
 RESOURCES += qml.qrc
 
