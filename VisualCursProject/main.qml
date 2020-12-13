@@ -139,6 +139,12 @@ Loader {
                     case 2:
                         loader.source = "ReturnedFragment.qml"
                         break
+                    case 3:
+                        break
+                    case 4:
+                        break
+                    case 5:
+                        break
                     default:
                         loader.source = "OnSaleFragment.qml"
                         break
@@ -150,26 +156,32 @@ Loader {
                 id: nav
                 Rectangle {
                     anchors.fill: parent
-                    color: "white"
+                    color: "#578CBF"
 
                     // Список с пунктами меню
                     ListView {
+                        spacing: 10
                         anchors.fill: parent
 
                         delegate: Item {
-                            height: dp(48)
+                            height: dp(110)
                             anchors.left: parent.left
                             anchors.right: parent.right
 
                             Rectangle {
+                                border.color: "#1760A6"
+                                border.width: 3
+                                radius: 18
                                 anchors.fill: parent
                                 anchors.margins: dp(5)
-                                color: "whitesmoke"
+                                color: "#9ACDFF"
 
                                 Text {
                                     text: fragment
                                     anchors.fill: parent
-                                    font.pixelSize: dp(20)
+                                    font.bold: true
+                                    font.pixelSize: dp(25)
+                                    color: "#1760A6"
 
                                     renderType: Text.NativeRendering
                                     horizontalAlignment: Text.AlignHCenter
@@ -224,6 +236,15 @@ Loader {
         }
         ListElement {
             fragment: "Возвращенная одежда"
+        }
+        ListElement {
+            fragment: "Продажа"
+        }
+        ListElement {
+            fragment: "Возврат"
+        }
+        ListElement {
+            fragment: "Помощь"
         }
     }
 }
