@@ -360,16 +360,10 @@ Rectangle {
                 implicitHeight: listviewSortBy.contentHeight
                 padding: 1
                 onAboutToHide: {
-                    controlMaleRadio.checked
-                            == true ? SoldModel.updateModelWithFilter(
-                                          controlCategory.displayText,
-                                          controlSize.displayText,
-                                          qsTr("Мужская"),
-                                          controlSortBy.displayText) : SoldModel.updateModelWithFilter(
-                                          controlCategory.displayText,
-                                          controlSize.displayText,
-                                          qsTr("Женская"),
-                                          controlSortBy.displayText)
+                    SoldModel.updateModelWithFilter(
+                                controlCategory.displayText,
+                                controlSortBy.displayText, soldDateFrom.text,
+                                soldDateTo.text)
                 }
 
                 contentItem: ListView {
@@ -399,233 +393,84 @@ Rectangle {
             font.family: "Times"
             font.pointSize: 13
             font.bold: true
-            text: "Размер"
+            text: "Период с:"
             color: "#1760A6"
         }
 
-        ComboBox {
-            id: controlSize
-            anchors.margins: 10
+        TextField {
+            height: 25
+            anchors.topMargin: 5
+            anchors.rightMargin: 15
+            anchors.leftMargin: 15
+            id: soldDateFrom
+            placeholderText: "dd.mm.yyyy"
             anchors.top: sizeComboBoxLabel.bottom
-            anchors.left: parent.left
             anchors.right: parent.right
-            model: ["S", "M", "L ", "XL", "XXL"]
-
-            delegate: ItemDelegate {
-                width: controlSize.width
-                contentItem: Text {
-                    text: modelData
-                    color: hovered ? "#1760A6" : "#47A4FF"
-                    font: controlSize.font
-                    elide: Text.ElideRight
-                    verticalAlignment: Text.AlignVCenter
-                }
-                highlighted: controlSize.highlightedIndex == index
+            anchors.left: parent.left
+            onTextChanged: {
+                SoldModel.updateModelWithFilter(controlCategory.displayText,
+                                                controlSortBy.displayText,
+                                                soldDateFrom.text,
+                                                soldDateTo.text)
             }
-
-            indicator: Canvas {
-                id: canvasSize
-                x: controlSize.width - width - controlSize.rightPadding
-                y: controlSize.topPadding + (controlSize.availableHeight - height) / 2
-                width: 12
-                height: 8
-                contextType: "2d"
-                rotation: listviewSize.visible ? 180 : 0
-
-                Connections {
-                    target: controlSize
-                    onPressedChanged: canvasSize.requestPaint()
-                }
-
-                onPaint: {
-                    context.reset()
-                    context.moveTo(0, 0)
-                    context.lineTo(width, 0)
-                    context.lineTo(width / 2, height)
-                    context.closePath()
-                    context.fillStyle = controlSize.pressed ? "#1760A6" : "#47A4FF"
-                    context.fill()
-                }
-            }
-
-            contentItem: Text {
-                id: contentSize
-                text: controlSize.displayText
-                font: controlSize.font
-                color: controlSize.hovered ? "#1760A6" : "#47A4FF"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                elide: Text.ElideRight
-            }
-
-            background: Rectangle {
-                implicitWidth: 120
-                implicitHeight: 40
-                border.color: controlSize.hovered ? "#1760A6" : "#47A4FF"
-                border.width: controlSize.visualFocus ? 5 : 3
-                radius: 4
-            }
-
-            popup: Popup {
-                y: controlSize.height - 1
-                width: controlSize.width
-                implicitHeight: listviewSize.contentHeight
-                padding: 1
-                onAboutToHide: {
-                    controlMaleRadio.checked
-                            == true ? SoldModel.updateModelWithFilter(
-                                          controlCategory.displayText,
-                                          controlSize.displayText,
-                                          qsTr("Мужская"),
-                                          controlSortBy.displayText) : SoldModel.updateModelWithFilter(
-                                          controlCategory.displayText,
-                                          controlSize.displayText,
-                                          qsTr("Женская"),
-                                          controlSortBy.displayText)
-                }
-
-                contentItem: ListView {
-                    id: listviewSize
-                    clip: true
-                    model: controlSize.popup.visible ? controlSize.delegateModel : null
-                    currentIndex: controlSize.highlightedIndex
-
-                    ScrollIndicator.vertical: ScrollIndicator {
-                    }
-                }
-
-                background: Rectangle {
-                    border.color: controlSize.hovered ? "#1760A6" : "#47A4FF"
-                    radius: 4
-                }
-            }
+            font.bold: true
+            font.pointSize: 10
+            maximumLength: 10
+            text: "01.01.1990"
+            font.italic: false
+            renderType: Text.NativeRendering
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            color: "#1760A6"
         }
 
         Label {
             anchors.leftMargin: 15
             anchors.topMargin: 40
-            anchors.top: controlSize.bottom
+            anchors.top: soldDateFrom.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            id: femaleMaleLabel
+            id: toDateLabel
             font.family: "Times"
             font.pointSize: 13
             font.bold: true
-            text: "Мужская или женская"
+            text: "Период до:"
             color: "#1760A6"
         }
 
-        Column {
-            id: radioColumn
-            anchors.topMargin: 20
+        TextField {
+            height: 25
+            anchors.topMargin: 5
+            anchors.rightMargin: 15
             anchors.leftMargin: 15
-            anchors.top: femaleMaleLabel.bottom
-            anchors.left: parent.left
+            id: soldDateTo
+            placeholderText: "dd.mm.yyyy"
+            anchors.top: toDateLabel.bottom
             anchors.right: parent.right
-            RadioButton {
-                id: controlMaleRadio
-                text: qsTr("Мужская одежда")
-                checked: true
-                onClicked: {
-                    controlMaleRadio.checked
-                            == true ? SoldModel.updateModelWithFilter(
-                                          controlCategory.displayText,
-                                          controlSize.displayText,
-                                          qsTr("Мужская"),
-                                          controlSortBy.displayText) : SoldModel.updateModelWithFilter(
-                                          controlCategory.displayText,
-                                          controlSize.displayText,
-                                          qsTr("Женская"),
-                                          controlSortBy.displayText)
-                }
-
-                indicator: Rectangle {
-                    id: indicatorMale
-                    implicitWidth: 26
-                    implicitHeight: 26
-                    x: controlMaleRadio.leftPadding
-                    y: parent.height / 2 - height / 2
-                    radius: 13
-                    border.color: controlMaleRadio.down ? "#47A4FF" : "#1760A6"
-
-                    Rectangle {
-                        width: 14
-                        height: 14
-                        x: 6
-                        y: 6
-                        radius: 7
-                        color: controlMaleRadio.down ? "#47A4FF" : "#1760A6"
-                        visible: controlMaleRadio.checked
-                    }
-                }
-
-                contentItem: Text {
-                    id: maleText
-                    anchors.left: indicatorMale.right
-                    anchors.leftMargin: 10
-                    text: controlMaleRadio.text
-                    font: controlMaleRadio.font
-                    opacity: enabled ? 1.0 : 0.3
-                    color: controlMaleRadio.down ? "#47A4FF" : "#1760A6"
-                    verticalAlignment: Text.AlignVCenter
-                }
+            anchors.left: parent.left
+            text: "01.01.2050"
+            font.bold: true
+            font.pointSize: 10
+            onTextChanged: {
+                SoldModel.updateModelWithFilter(controlCategory.displayText,
+                                                controlSortBy.displayText,
+                                                soldDateFrom.text,
+                                                soldDateTo.text)
             }
 
-            RadioButton {
-                id: controlFemaleRadio
-                text: qsTr("Женская одежда")
-                checked: false
-
-                onClicked: {
-                    controlMaleRadio.checked
-                            == true ? SoldModel.updateModelWithFilter(
-                                          controlCategory.displayText,
-                                          controlSize.displayText,
-                                          qsTr("Мужская"),
-                                          controlSortBy.displayText) : SoldModel.updateModelWithFilter(
-                                          controlCategory.displayText,
-                                          controlSize.displayText,
-                                          qsTr("Женская"),
-                                          controlSortBy.displayText)
-                }
-
-                indicator: Rectangle {
-                    id: indicatorFemale
-                    implicitWidth: 26
-                    implicitHeight: 26
-                    x: controlMaleRadio.leftPadding
-                    y: parent.height / 2 - height / 2
-                    radius: 13
-                    border.color: controlFemaleRadio.down ? "#47A4FF" : "#1760A6"
-
-                    Rectangle {
-                        width: 14
-                        height: 14
-                        x: 6
-                        y: 6
-                        radius: 7
-                        color: controlFemaleRadio.down ? "#47A4FF" : "#1760A6"
-                        visible: controlFemaleRadio.checked
-                    }
-                }
-
-                contentItem: Text {
-                    anchors.leftMargin: 10
-                    anchors.left: indicatorFemale.right
-                    text: controlFemaleRadio.text
-                    font: controlFemaleRadio.font
-                    opacity: enabled ? 1.0 : 0.3
-                    color: controlFemaleRadio.down ? "#47A4FF" : "#1760A6"
-                    verticalAlignment: Text.AlignVCenter
-                }
-            }
+            maximumLength: 10
+            font.italic: false
+            renderType: Text.NativeRendering
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            color: "#1760A6"
         }
 
         Button {
             anchors.topMargin: 30
             anchors.leftMargin: 60
             anchors.rightMargin: 60
-            anchors.top: radioColumn.bottom
+            anchors.top: soldDateTo.bottom
             anchors.right: parent.right
             anchors.left: parent.left
             id: controlInShop
@@ -990,7 +835,7 @@ Rectangle {
                     radius: 4
                 }
                 onClicked: {
-                    database.removeFromOnSaleTable(dialogVars.thisId)
+                    database.removeFromSoldTable(dialogVars.thisId)
                     moreDialog.close()
                     SoldModel.updateModel()
                 }
@@ -1595,8 +1440,8 @@ Rectangle {
                     controlMaleRadioAdd.checked
                             == true ? dialogVars.thisMaleFemale
                                       = "Мужская" : dialogVars.thisMaleFemale = "Женская"
-                    database.removeFromOnSaleTable(dialogVars.thisId)
-                    database.insertIntoOnSaleTable(
+                    database.removeFromSoldTable(dialogVars.thisId)
+                    database.insertIntoSoldTable(
                                 clothesNameDialogAdd.text,
                                 clothesPriceDialogAdd.text,
                                 controlCategoryAdd.displayText,
