@@ -372,7 +372,13 @@ QString ShopDataBase::convertDate(QString dateToFlip){
     month += first[6];
     day += first[8];
 }
-    QString date = day + "." + month + "." + year;
+    QString date = "";
+    if(first.size() >=9){
+    date = day + "." + month + "." + year;
+    }
+    else {
+        date = "";
+    }
     return date;
 }
 

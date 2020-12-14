@@ -1334,7 +1334,7 @@ Rectangle {
                 anchors.top: clothesMadeByDialogAdd.bottom
                 anchors.right: parent.right
                 font.bold: true
-                text: database.convertDate(dialogVars.thisRecieveDate)
+                text: database.convertDate(dialogVars.thisReturnDate)
                 font.pointSize: 10
                 maximumLength: 10
                 font.italic: false

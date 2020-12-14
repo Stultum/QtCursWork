@@ -34,7 +34,7 @@ Loader {
                 }
                 value: 0
                 from: 0
-                to: 100
+                to: 50
             }
             Timer {
                 id: timer
@@ -43,7 +43,7 @@ Loader {
                 repeat: true
                 onTriggered: {
                     progress.value++
-                    if (progress.value >= 1) {
+                    if (progress.value >= 50) {
                         timer.stop()
                         splashWindow.timeout()
                     }

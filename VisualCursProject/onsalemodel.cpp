@@ -57,7 +57,7 @@ void OnSaleModel::updateModelWithFilter(const QString& category, const QString& 
     if(filter == topWear){
         prepare = "SELECT id, Name, Price, Category, Size, MadeBy, Image, RecieveDate, MaleOrFemale FROM ClothesOnSale WHERE Category='" + category + "' AND Size='" + size + "' AND MaleOrFemale='" + maleFemale + "' ORDER BY Price DESC";
     } else if(filter == footWear){
-        prepare = "SELECT id, Name, Price, Category, Size, MadeBy, Image, RecieveDate, MaleOrFemale FROM ClothesOnSale WHERE Category='" + category + "' AND Size='" + size + "' AND MaleOrFemale='" + maleFemale + "' ORDER BY Price DESC";
+        prepare = "SELECT id, Name, Price, Category, Size, MadeBy, Image, RecieveDate, MaleOrFemale FROM ClothesOnSale WHERE Category='" + category + "' AND Size='" + size + "' AND MaleOrFemale='" + maleFemale + "' ORDER BY Price ASC";
     } else if(filter == warmWear){
         prepare = "SELECT id, Name, Price, Category, Size, MadeBy, Image, RecieveDate, MaleOrFemale FROM ClothesOnSale WHERE Category='" + category + "' AND Size='" + size + "' AND MaleOrFemale='" + maleFemale + "' ORDER BY RecieveDate ASC";
     } else if(filter == botWear){
