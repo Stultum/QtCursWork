@@ -625,7 +625,7 @@ Rectangle {
                                                  dialogVars.thisSize,
                                                  dialogVars.thisMadeBy,
                                                  dialogVars.thisImage,
-                                                 dialogVars.thisRecieveDate,
+                                                 database.convertDate(dialogVars.thisRecieveDate),
                                                  dialogVars.thisMaleFemale)
                     onSaleModel.updateModel()
                     SoldModel.updateModel()

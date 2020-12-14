@@ -721,15 +721,13 @@ Rectangle {
 
                 onClicked: {
                     database.removeFromSoldTable(dialogVars.thisId)
-                    database.insertIntoReturnedTable(dialogVars.thisName,
-                                                     dialogVars.thisPrice,
-                                                     dialogVars.thisCategory,
-                                                     dialogVars.thisSize,
-                                                     dialogVars.thisMadeBy,
-                                                     dialogVars.thisImage,
-                                                     dialogVars.thisSoldDate,
-                                                     dialogVars.thisMaleFemale,
-                                                     controlSize.displayText)
+                    database.insertIntoReturnedTable(
+                                dialogVars.thisName, dialogVars.thisPrice,
+                                dialogVars.thisCategory, dialogVars.thisSize,
+                                dialogVars.thisMadeBy, dialogVars.thisImage,
+                                database.convertDate(dialogVars.thisSoldDate),
+                                dialogVars.thisMaleFemale,
+                                controlSize.displayText)
                     SoldModel.updateModel()
                     ReturnModel.updateModel()
                     confirmDialog.close()
