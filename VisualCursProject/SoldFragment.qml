@@ -491,71 +491,6 @@ Rectangle {
                 SoldModel.updateModel()
             }
         }
-
-
-        //        Label {
-        //            anchors.leftMargin: 70
-        //            anchors.topMargin: 50
-        //            anchors.top: controlInShop.bottom
-        //            anchors.left: parent.left
-        //            anchors.right: parent.right
-        //            id: totalCashLabel
-        //            font.family: "Times"
-        //            font.pointSize: 13
-        //            font.bold: true
-        //            text: "Итоговая прибыль:"
-        //            color: "#1760A6"
-        //        }
-
-        //        ListView {
-        //            model: CashModel
-        //            anchors.leftMargin: 100
-        //            anchors.topMargin: 20
-        //            anchors.top: totalCashLabel.bottom
-        //            anchors.left: parent.left
-        //            anchors.right: parent.right
-        //            delegate: Item {
-        //                anchors.fill: parent
-        //                Text {
-        //                    id: totalCashValue
-        //                    font.family: "Times"
-        //                    font.pointSize: 13
-        //                    font.bold: true
-        //                    text: moneyModel + " рублей"
-        //                    color: "#1760A6"
-        //                }
-        //            }
-        //        }
-        Button {
-            anchors.margins: 10
-            anchors.right: parent.right
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
-            id: controlAddNew
-            text: qsTr("Распечатать отчет")
-
-            contentItem: Text {
-                text: controlAddNew.text
-                font: controlAddNew.font
-                opacity: enabled ? 1.0 : 0.3
-                color: controlAddNew.down ? "#47A4FF" : "#1760A6"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                elide: Text.ElideRight
-            }
-
-            background: Rectangle {
-                implicitWidth: 100
-                implicitHeight: 40
-                opacity: enabled ? 1 : 0.3
-                border.color: controlAddNew.down ? "#47A4FF" : "#1760A6"
-                border.width: 1
-                radius: 4
-            }
-            onClicked: {
-
-            }
-        }
     }
 
     //Дилоговое окно с подробной информацией
@@ -845,9 +780,9 @@ Rectangle {
 
                 contentItem: Text {
                     text: "Удалить товар"
-                    font: controlAddNew.font
+                    font: buttonDelete.font
                     opacity: enabled ? 1.0 : 0.3
-                    color: controlAddNew.down ? "#47A4FF" : "#1760A6"
+                    color: buttonDelete.down ? "#47A4FF" : "#1760A6"
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
@@ -857,7 +792,7 @@ Rectangle {
                     implicitWidth: 100
                     implicitHeight: 40
                     opacity: enabled ? 1 : 0.3
-                    border.color: controlAddNew.down ? "#47A4FF" : "#1760A6"
+                    border.color: buttonDelete.down ? "#47A4FF" : "#1760A6"
                     border.width: 1
                     radius: 4
                 }
@@ -877,9 +812,9 @@ Rectangle {
 
                 contentItem: Text {
                     text: "Редактировать товар"
-                    font: controlAddNew.font
+                    font: buttonChange.font
                     opacity: enabled ? 1.0 : 0.3
-                    color: controlAddNew.down ? "#47A4FF" : "#1760A6"
+                    color: buttonChange.down ? "#47A4FF" : "#1760A6"
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
@@ -889,7 +824,7 @@ Rectangle {
                     implicitWidth: 100
                     implicitHeight: 40
                     opacity: enabled ? 1 : 0.3
-                    border.color: controlAddNew.down ? "#47A4FF" : "#1760A6"
+                    border.color: buttonChange.down ? "#47A4FF" : "#1760A6"
                     border.width: 1
                     radius: 4
                 }
