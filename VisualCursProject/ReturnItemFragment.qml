@@ -164,10 +164,26 @@ Rectangle {
         anchors.right: parent.right
         color: "#9ACDFF"
 
+        Text {
+            id: title
+            text: "Возврат одежды"
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.margins: 15
+            font.bold: true
+            font.pixelSize: dp(25)
+            color: "#1760A6"
+
+            renderType: Text.NativeRendering
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+
         Label {
             anchors.leftMargin: 15
             anchors.topMargin: 40
-            anchors.top: parent.top
+            anchors.top: title.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             id: categoryComboBoxLabel
