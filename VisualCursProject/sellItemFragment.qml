@@ -565,7 +565,8 @@ Rectangle {
                 anchors.topMargin: 50
                 anchors.leftMargin: 15
                 anchors.rightMargin: 15
-                text: "    Вы действительно\n  хотите продать товар?"
+                horizontalAlignment: Text.AlignHCenter
+                text: "Вы действительно\nхотите продать товар?"
                 font.family: "Times"
                 font.pointSize: 13
                 font.bold: true

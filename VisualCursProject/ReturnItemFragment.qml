@@ -567,7 +567,7 @@ Rectangle {
                 anchors.leftMargin: 15
                 anchors.rightMargin: 15
                 horizontalAlignment: Text.AlignHCenter
-                text: "Вы действительно\n  хотите вернуть товар?"
+                text: "Вы действительно\nхотите вернуть товар?"
                 font.family: "Times"
                 font.pointSize: 13
                 font.bold: true
